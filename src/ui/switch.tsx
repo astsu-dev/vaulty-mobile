@@ -14,18 +14,24 @@ export type SwitchProps = {
   enabled: boolean;
   onChange: (enabled: boolean) => void;
   disabled?: boolean;
+  size?: "md" | "lg";
 };
 
 const easingFn = Easing.bezier(0.4, 0, 0.2, 1);
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export function Switch({ enabled, onChange, disabled = false }: SwitchProps) {
+export function Switch({
+  enabled,
+  onChange,
+  disabled = false,
+  size = "lg",
+}: SwitchProps) {
   const { colors, scale: themeScale } = useTheme();
   const scale = useCallback(
     // Scale here to keep consistensy with size values from Figma design
-    (value: number) => themeScale(value) * 1.25,
-    [themeScale],
+    (value: number) => themeScale(value) * (size === "lg" ? 1.25 : 1),
+    [themeScale, size],
   );
 
   const handleOnPress = () => {

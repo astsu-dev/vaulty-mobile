@@ -1,6 +1,5 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
-import * as Clipboard from "expo-clipboard";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -14,7 +13,6 @@ import { useLang } from "@/modules/lang";
 import {
   BottomSheet,
   Button,
-  CopyIcon,
   ScalablePressable,
   useTheme,
   Slider,
@@ -25,10 +23,16 @@ import {
 
 export type PasswordGeneratorSheetProps = {
   sheetRef: React.RefObject<BottomSheetModal>;
+  buttonText: string;
+  buttonLeftIcon?: React.ReactNode;
+  onButtonPress?: (password: string) => void;
 };
 
 export function PasswordGeneratorSheet({
   sheetRef,
+  buttonText,
+  buttonLeftIcon,
+  onButtonPress,
 }: PasswordGeneratorSheetProps) {
   const { colors, scale } = useTheme();
   const lang = useLang();
@@ -41,7 +45,7 @@ export function PasswordGeneratorSheet({
 
   const [password, setPassword] = useState("");
 
-  const regeneratePassword = useCallback(() => {
+  const regeneratePassword = () => {
     if (hasUppercase || hasLowercase || hasDigits || hasSymbols) {
       setPassword(
         generatePassword({
@@ -53,15 +57,15 @@ export function PasswordGeneratorSheet({
         }),
       );
     }
-  }, [length, hasUppercase, hasLowercase, hasDigits, hasSymbols]);
+  };
 
   useEffect(() => {
     regeneratePassword();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleOnPressCopy = () => {
-    Clipboard.setStringAsync(password);
+  const handleOnPressButton = () => {
+    onButtonPress?.(password);
     sheetRef.current?.close();
   };
 
@@ -237,9 +241,9 @@ export function PasswordGeneratorSheet({
           />
         </View>
         <Button
-          text={lang.passwordGeneratorSheet.copyButton}
-          onPress={handleOnPressCopy}
-          leftIcon={<CopyIcon size="md" color={colors.primary} />}
+          text={buttonText}
+          onPress={handleOnPressButton}
+          leftIcon={buttonLeftIcon}
         />
       </View>
     </BottomSheet>
@@ -270,6 +274,7 @@ function BooleanField({
         alignItems: "center",
         justifyContent: "space-between",
       }}
+      android_disableSound
       onPress={handleOnPress}
     >
       <Text

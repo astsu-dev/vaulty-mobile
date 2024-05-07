@@ -1,10 +1,12 @@
 import {
   BottomSheetBackdropProps,
   BottomSheetModal,
+  BottomSheetModalProps,
   BottomSheetView,
   useBottomSheetTimingConfigs,
 } from "@gorhom/bottom-sheet";
 import { PropsWithChildren, useMemo } from "react";
+import { StyleProp, ViewStyle } from "react-native";
 import Animated, {
   Easing,
   Extrapolation,
@@ -13,13 +15,18 @@ import Animated, {
 } from "react-native-reanimated";
 import { useTheme } from "./theme";
 
-export type BottomSheetProps = PropsWithChildren & {
-  bottomSheetModalRef: React.RefObject<BottomSheetModal>;
-};
+export type BottomSheetProps = PropsWithChildren &
+  Omit<BottomSheetModalProps, "style"> & {
+    bottomSheetModalRef: React.RefObject<BottomSheetModal>;
+    style?: StyleProp<ViewStyle>;
+  };
 
 export function BottomSheet({
   children,
   bottomSheetModalRef,
+  style,
+  enableDynamicSizing = true,
+  ...props
 }: BottomSheetProps) {
   const { colors, scale } = useTheme();
 
@@ -32,8 +39,7 @@ export function BottomSheet({
     <BottomSheetModal
       animationConfigs={animationConfigs}
       ref={bottomSheetModalRef}
-      index={0}
-      enableDynamicSizing
+      enableDynamicSizing={enableDynamicSizing}
       backgroundStyle={{
         backgroundColor: colors.primary,
         borderTopStartRadius: scale(30),
@@ -54,12 +60,16 @@ export function BottomSheet({
           {...props}
         />
       )}
+      {...props}
     >
       <BottomSheetView
-        style={{
-          paddingHorizontal: scale(20),
-          paddingBottom: scale(20),
-        }}
+        style={[
+          {
+            paddingHorizontal: scale(20),
+            paddingBottom: scale(20),
+          },
+          style,
+        ]}
       >
         {children}
       </BottomSheetView>

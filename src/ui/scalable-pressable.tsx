@@ -45,6 +45,7 @@ export function ScalablePressable({
   return (
     <AnimatedPressable
       android_disableSound={android_disableSound}
+      unstable_pressDelay={5}
       onPressIn={handleOnPressIn}
       onPressOut={handleOnPressOut}
       style={[animatedStyle, style]}

@@ -8,7 +8,7 @@ export type ButtonVariant = "accent" | "secondary" | "danger";
 export type ButtonSize = "md" | "lg";
 
 export type ButtonProps = ComponentProps<typeof ScalablePressable> & {
-  text: string;
+  text?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
   style?: StyleProp<ViewStyle>;
@@ -47,20 +47,22 @@ export function Button({
       {...props}
     >
       {leftIcon}
-      <Text
-        style={{
-          fontFamily: "Gilroy-SemiBold",
-          fontSize: scale(16),
-          color:
-            variant === "accent"
-              ? colors.primary
-              : variant === "secondary"
-                ? colors.text
-                : colors.lightText,
-        }}
-      >
-        {text}
-      </Text>
+      {text && (
+        <Text
+          style={{
+            fontFamily: "Gilroy-SemiBold",
+            fontSize: scale(16),
+            color:
+              variant === "accent"
+                ? colors.primary
+                : variant === "secondary"
+                  ? colors.text
+                  : colors.lightText,
+          }}
+        >
+          {text}
+        </Text>
+      )}
     </ScalablePressable>
   );
 }

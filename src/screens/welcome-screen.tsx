@@ -2,25 +2,69 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
-import { useCallback, useRef } from "react";
-import { Text, View } from "react-native";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import * as Haptics from "expo-haptics";
+import { useCallback, useEffect, useRef } from "react";
+import { Text, ToastAndroid, View } from "react-native";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
+import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
+import {
+  BackupFilePickCancelledError,
+  pickBackupFile,
+  useBackupFileStore,
+} from "@/modules/backup";
 import { useLang } from "@/modules/lang";
-import { PasswordGeneratorSheet } from "@/modules/password/ui/password-generator-sheet";
+import { PasswordGeneratorCopySheet } from "@/modules/password";
+import { useVaultMetadataStore } from "@/modules/vault";
 import { ScalablePressable, useTheme, DiceIcon, Button } from "@/ui";
 
-export function WelcomeScreen() {
+export function WelcomeScreen({
+  navigation,
+}: NativeStackScreenProps<RootStackParamList, "Welcome">) {
   const { colors, scale } = useTheme();
   const lang = useLang();
+  const { testString } = useVaultMetadataStore();
+  const { setBackupFileUri } = useBackupFileStore((state) => ({
+    setBackupFileUri: state.setBackupFileUri,
+  }));
 
-  // ref
-  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+  const passwordGeneratorSheetRef = useRef<BottomSheetModal>(null);
 
-  // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
+  const handlePresentPasswordGeneratorPress = useCallback(() => {
+    passwordGeneratorSheetRef.current?.present();
   }, []);
+
+  const handleOnCreateVaultPress = () => {
+    navigation.navigate("CreateVault");
+  };
+
+  const handleOnPickBackupFilePress = async () => {
+    try {
+      const fileUri = await pickBackupFile();
+      setBackupFileUri(fileUri);
+      navigation.navigate("ImportBackup");
+    } catch (err) {
+      if (err instanceof BackupFilePickCancelledError) {
+        return;
+      }
+
+      Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      ToastAndroid.show(
+        lang.errors.createUnexpectedErrorText(err),
+        ToastAndroid.SHORT,
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (testString !== null) {
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "UnlockVault" }],
+      });
+    }
+  }, [testString, navigation]);
 
   return (
     <BottomSheetModalProvider>
@@ -28,8 +72,8 @@ export function WelcomeScreen() {
         header={{
           separator: false,
           rightButtons: (
-            <ScalablePressable>
-              <DiceIcon onPress={handlePresentModalPress} />
+            <ScalablePressable onPress={handlePresentPasswordGeneratorPress}>
+              <DiceIcon />
             </ScalablePressable>
           ),
         }}
@@ -68,7 +112,7 @@ export function WelcomeScreen() {
                     color: colors.text,
                   }}
                 >
-                  {lang.welcome.greetings}
+                  {lang.welcomeScreen.greetings}
                 </Text>
                 <Text
                   style={{
@@ -77,7 +121,7 @@ export function WelcomeScreen() {
                     color: colors.subtext,
                   }}
                 >
-                  {lang.welcome.letsSetupYourVault}
+                  {lang.welcomeScreen.letsSetupYourVault}
                 </Text>
               </View>
               <View
@@ -85,17 +129,21 @@ export function WelcomeScreen() {
                   gap: scale(10),
                 }}
               >
-                <Button text={lang.welcome.createVaultButton} />
+                <Button
+                  text={lang.welcomeScreen.createVaultButton}
+                  onPress={handleOnCreateVaultPress}
+                />
                 <Button
                   variant="secondary"
-                  text={lang.welcome.importVaultButton}
+                  text={lang.welcomeScreen.importVaultButton}
+                  onPress={handleOnPickBackupFilePress}
                 />
               </View>
             </View>
           </View>
         </View>
       </ScreenLayout>
-      <PasswordGeneratorSheet sheetRef={bottomSheetModalRef} />
+      <PasswordGeneratorCopySheet sheetRef={passwordGeneratorSheetRef} />
     </BottomSheetModalProvider>
   );
 }
