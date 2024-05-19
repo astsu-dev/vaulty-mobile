@@ -1,6 +1,6 @@
-import * as Clipboard from "expo-clipboard";
 import { Text, View } from "react-native";
 import { Password } from "../store/password";
+import { useCopyPassword } from "../use-copy-password";
 import { CopyIcon, ScalablePressable, useTheme } from "@/ui";
 
 export type PasswordCardProps = {
@@ -10,9 +10,10 @@ export type PasswordCardProps = {
 
 export function PasswordCard({ password, onPress }: PasswordCardProps) {
   const { colors, scale } = useTheme();
+  const copyPassword = useCopyPassword();
 
-  const handleOnCopyPasswordPress = () => {
-    Clipboard.setStringAsync(password.password);
+  const handleOnCopyPasswordPress = async () => {
+    await copyPassword(password.password);
   };
 
   return (

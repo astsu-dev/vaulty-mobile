@@ -1,0 +1,9 @@
+{
+  "platforms": ["android"],
+  "ios": {
+    "modules": ["ExpoForegroundActionsModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.foregroundactions.ExpoForegroundActionsModule"]
+  }
+}

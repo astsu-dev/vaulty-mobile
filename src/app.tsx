@@ -1,9 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
-import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AddPasswordScreen } from "@/screens/add-password-screen";
 import { ChangeVaultPasswordScreen } from "@/screens/change-vault-password-screen";
@@ -19,22 +16,7 @@ import { WelcomeScreen } from "@/screens/welcome-screen";
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-SplashScreen.preventAutoHideAsync();
-
 function App() {
-  const [fontsLoaded] = useFonts({
-    "Gilroy-Regular": require("./assets/fonts/Gilroy-Regular.ttf"),
-    "Gilroy-Medium": require("./assets/fonts/Gilroy-Medium.ttf"),
-    "Gilroy-SemiBold": require("./assets/fonts/Gilroy-SemiBold.ttf"),
-    "Gilroy-Bold": require("./assets/fonts/Gilroy-Bold.ttf"),
-  });
-
-  useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
   return (
     <SafeAreaProvider>
       <RootLayout>

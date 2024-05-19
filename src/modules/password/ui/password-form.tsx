@@ -6,6 +6,7 @@ import * as Clipboard from "expo-clipboard";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
 import { PasswordCreate } from "../store/password";
+import { useCopyPassword } from "../use-copy-password";
 import { PasswordGeneratorUsePasswordSheet } from "./password-generator-use-password-sheet";
 import { PasswordInput } from "./password-input";
 import { useLang } from "@/modules/lang";
@@ -41,6 +42,7 @@ export function PasswordForm({
   const handlePresentPasswordGenerator = () => {
     passwordGeneratorSheetRef.current?.present();
   };
+  const copyPassword = useCopyPassword();
 
   useEffect(() => {
     setValues(defaultValues);
@@ -52,8 +54,8 @@ export function PasswordForm({
     }
   };
 
-  const handleOnCopyPasswordPress = () => {
-    Clipboard.setStringAsync(values.password);
+  const handleOnCopyPasswordPress = async () => {
+    await copyPassword(values.password);
   };
 
   const handleOnCopyUsernamePress = () => {

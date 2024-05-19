@@ -2,6 +2,7 @@
   "expo": {
     "name": "Vaulty",
     "slug": "vaulty",
+    "scheme": "vaulty",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
@@ -24,7 +25,13 @@
         "foregroundImage": "./src/assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "cash.moneyflow.vaulty"
+      "package": "com.astsu_dev.vaulty",
+      "permissions": [
+        "FOREGROUND_SERVICE",
+        "FOREGROUND_SERVICE_DATA_SYNC",
+        "WAKE_LOCK",
+        "POST_NOTIFICATIONS"
+      ]
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
@@ -52,6 +59,9 @@
             }
           }
         }
+      ],
+      [
+        "./plugins/expo-foreground-actions"
       ]
     ]
   }

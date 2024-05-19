@@ -127,6 +127,10 @@ export type LangDictionary = {
     passwordEmptyError: string;
     successfullyChanged: string;
   };
+  clearPasswordFromClipboardNotification: {
+    title: string;
+    description: (timeout: number) => string;
+  };
 };
 
 export function useLang(): LangDictionary {
@@ -264,6 +268,11 @@ export function useLang(): LangDictionary {
         "This will reencrypt your vault with a new password",
       passwordEmptyError: "Password can't be empty",
       successfullyChanged: "Password successfully changed",
+    },
+    clearPasswordFromClipboardNotification: {
+      title: "Password copied",
+      description: (timeout) =>
+        `Your clipboard will be cleared in ${timeout} seconds`,
     },
   };
 }
