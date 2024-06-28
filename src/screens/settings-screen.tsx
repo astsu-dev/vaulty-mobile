@@ -9,7 +9,11 @@ import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import { AppearanceSettingsSection } from "@/modules/appearance";
 import { BackupSettingsSection } from "@/modules/backup";
-import { useLang } from "@/modules/lang";
+import {
+  ChangeLanguageSheet,
+  LanguageSettingsSection,
+  useLang,
+} from "@/modules/lang";
 import { DeleteVaultSheet } from "@/modules/vault";
 import { Button, TrashIcon, useTheme } from "@/ui";
 
@@ -18,6 +22,7 @@ export function SettingsScreen({
 }: NativeStackScreenProps<RootStackParamList, "Settings">) {
   const { colors, scale } = useTheme();
   const lang = useLang();
+  const changeLanguageSheetRef = useRef<BottomSheetModal>(null);
   const deleteVaultSheetRef = useRef<BottomSheetModal>(null);
 
   const handleOnPressPresentDeleteVaultSheet = () => {
@@ -44,8 +49,8 @@ export function SettingsScreen({
       <ScreenLayout
         header={{
           title: lang.settingsScreen.headerTitle,
-          separator: true,
           backButton: true,
+          separator: true,
         }}
       >
         <ScrollView
@@ -67,6 +72,7 @@ export function SettingsScreen({
               onPickBackupFile={handleOnPickBackupFile}
               onChangePasswordPress={handleOnChangePasswordPress}
             />
+            <LanguageSettingsSection sheetRef={changeLanguageSheetRef} />
           </View>
           <Button
             text={lang.settingsScreen.deleteVaultButton}
@@ -76,6 +82,7 @@ export function SettingsScreen({
           />
         </ScrollView>
       </ScreenLayout>
+      <ChangeLanguageSheet sheetRef={changeLanguageSheetRef} />
       <DeleteVaultSheet
         sheetRef={deleteVaultSheetRef}
         onDelete={handleOnDeleteVault}

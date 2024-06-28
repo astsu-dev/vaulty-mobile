@@ -18,3 +18,5 @@ export { SettingsIcon } from "./settings-icon";
 export { PhoneIcon } from "./phone-icon";
 export { DownloadIcon } from "./download-icon";
 export { UploadIcon } from "./upload-icon";
+export { GlobeIcon } from "./globe-icon";
+export { CheckmarkIcon } from "./checkmark-icon";

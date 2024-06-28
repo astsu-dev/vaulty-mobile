@@ -4,7 +4,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
-import { useCallback, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Text, ToastAndroid, View } from "react-native";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
@@ -14,10 +14,10 @@ import {
   pickBackupFile,
   useBackupFileStore,
 } from "@/modules/backup";
-import { useLang } from "@/modules/lang";
+import { ChangeLanguageSheet, useLang } from "@/modules/lang";
 import { PasswordGeneratorCopySheet } from "@/modules/password";
 import { useVaultMetadataStore } from "@/modules/vault";
-import { ScalablePressable, useTheme, DiceIcon, Button } from "@/ui";
+import { ScalablePressable, useTheme, DiceIcon, Button, GlobeIcon } from "@/ui";
 
 export function WelcomeScreen({
   navigation,
@@ -30,10 +30,15 @@ export function WelcomeScreen({
   }));
 
   const passwordGeneratorSheetRef = useRef<BottomSheetModal>(null);
+  const changeLanguageSheetRef = useRef<BottomSheetModal>(null);
 
-  const handlePresentPasswordGeneratorPress = useCallback(() => {
+  const handleOnPresentPasswordGeneratorSheet = () => {
     passwordGeneratorSheetRef.current?.present();
-  }, []);
+  };
+
+  const handleOnPresentChangeLanguageSheet = () => {
+    changeLanguageSheetRef.current?.present();
+  };
 
   const handleOnCreateVaultPress = () => {
     navigation.navigate("CreateVault");
@@ -72,9 +77,16 @@ export function WelcomeScreen({
         header={{
           separator: false,
           rightButtons: (
-            <ScalablePressable onPress={handlePresentPasswordGeneratorPress}>
-              <DiceIcon />
-            </ScalablePressable>
+            <>
+              <ScalablePressable
+                onPress={handleOnPresentPasswordGeneratorSheet}
+              >
+                <DiceIcon />
+              </ScalablePressable>
+              <ScalablePressable onPress={handleOnPresentChangeLanguageSheet}>
+                <GlobeIcon />
+              </ScalablePressable>
+            </>
           ),
         }}
       >
@@ -144,6 +156,7 @@ export function WelcomeScreen({
         </View>
       </ScreenLayout>
       <PasswordGeneratorCopySheet sheetRef={passwordGeneratorSheetRef} />
+      <ChangeLanguageSheet sheetRef={changeLanguageSheetRef} />
     </BottomSheetModalProvider>
   );
 }
