@@ -8,6 +8,7 @@ import { CreateVaultScreen } from "@/screens/create-vault-screen";
 import { ImportBackupScreen } from "@/screens/import-backup-screen";
 import { MyPasswordsScreen } from "@/screens/my-passwords-screen";
 import { PasswordOverviewScreen } from "@/screens/password-overview-screen";
+import { RemoteClipboardSettingsScreen } from "@/screens/remote-clipboard-settings-screen";
 import { RootLayout } from "@/screens/root-layout";
 import { RootStackParamList } from "@/screens/root-stack-param-list";
 import { SettingsScreen } from "@/screens/settings-screen";
@@ -39,6 +40,10 @@ function App() {
             <Stack.Screen
               name="ChangeVaultPassword"
               component={ChangeVaultPasswordScreen}
+            />
+            <Stack.Screen
+              name="RemoteClipboardSettings"
+              component={RemoteClipboardSettingsScreen}
             />
           </Stack.Navigator>
         </NavigationContainer>

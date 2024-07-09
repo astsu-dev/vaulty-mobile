@@ -1,7 +1,8 @@
 import { Text, View } from "react-native";
 import { Password } from "../store/password";
-import { useCopyPassword } from "../use-copy-password";
-import { CopyIcon, ScalablePressable, useTheme } from "@/ui";
+import { useCopyPassword, useCopyPasswordToRemote } from "../use-copy-password";
+import { useRemoteClipboardSettingsStore } from "@/modules/remote-clipboard";
+import { ComputerIcon, CopyIcon, ScalablePressable, useTheme } from "@/ui";
 
 export type PasswordCardProps = {
   password: Pick<Password, "name" | "username" | "password">;
@@ -11,9 +12,17 @@ export type PasswordCardProps = {
 export function PasswordCard({ password, onPress }: PasswordCardProps) {
   const { colors, scale } = useTheme();
   const copyPassword = useCopyPassword();
+  const copyPasswordToRemote = useCopyPasswordToRemote();
+  const { enabled: remoteClipboardEnabled } = useRemoteClipboardSettingsStore(
+    (state) => ({ enabled: state.enabled }),
+  );
 
   const handleOnCopyPasswordPress = async () => {
     await copyPassword(password.password);
+  };
+
+  const handleOnCopyPasswordToRemotePress = async () => {
+    await copyPasswordToRemote(password.password);
   };
 
   return (
@@ -57,14 +66,31 @@ export function PasswordCard({ password, onPress }: PasswordCardProps) {
           </Text>
         )}
       </View>
-      <ScalablePressable
-        onPress={handleOnCopyPasswordPress}
+      <View
         style={{
-          padding: scale(5.5),
+          flexDirection: "row",
+          gap: scale(4),
         }}
       >
-        <CopyIcon />
-      </ScalablePressable>
+        <ScalablePressable
+          onPress={handleOnCopyPasswordPress}
+          style={{
+            paddingEnd: remoteClipboardEnabled ? 0 : scale(5.5),
+          }}
+        >
+          <CopyIcon />
+        </ScalablePressable>
+        {remoteClipboardEnabled && (
+          <ScalablePressable
+            onPress={handleOnCopyPasswordToRemotePress}
+            style={{
+              paddingEnd: scale(5.5),
+            }}
+          >
+            <ComputerIcon />
+          </ScalablePressable>
+        )}
+      </View>
     </ScalablePressable>
   );
 }

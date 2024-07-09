@@ -16,6 +16,7 @@ export type TextInputProps = RNTextInputProps & {
   leftIcon?: React.ReactNode;
   rightActions?: React.ReactNode;
   insideSheet?: boolean;
+  disabled?: boolean;
 };
 
 export function TextInput({
@@ -25,6 +26,7 @@ export function TextInput({
   style,
   insideSheet,
   multiline,
+  disabled,
   ...props
 }: TextInputProps) {
   const { colors, scale } = useTheme();
@@ -41,9 +43,6 @@ export function TextInput({
       android_disableSound
       style={[
         {
-          flexDirection: "row",
-          alignItems: "center",
-          gap: scale(8),
           paddingHorizontal: scale(16),
           paddingVertical: scale(12),
           backgroundColor: colors.secondary,
@@ -52,33 +51,46 @@ export function TextInput({
         containerStyle,
       ]}
       onPress={handleOnPress}
+      disabled={disabled}
     >
-      {leftIcon}
-      <TextInputComponent
-        // @ts-expect-error BottomSheetTextInput props are not fully compatible with RNTextInput
-        ref={internalInputRef}
-        style={[
-          {
-            flex: 1,
-            fontFamily: "Gilroy-SemiBold",
-            fontSize: scale(14),
-            color: colors.text,
-            lineHeight: multiline ? scale(14 * 1.4) : undefined,
-          },
-          style,
-        ]}
-        placeholderTextColor={colors.subtext}
-        multiline={multiline}
-        {...props}
-      />
       <View
         style={{
+          width: "100%",
           flexDirection: "row",
           alignItems: "center",
           gap: scale(8),
+          opacity: disabled ? 0.5 : 1,
         }}
       >
-        {rightActions}
+        {leftIcon}
+        <TextInputComponent
+          // @ts-expect-error BottomSheetTextInput props are not fully compatible with RNTextInput
+          ref={internalInputRef}
+          style={[
+            {
+              flex: 1,
+              fontFamily: "Gilroy-SemiBold",
+              fontSize: scale(14),
+              color: colors.text,
+              lineHeight: multiline ? scale(14 * 1.4) : undefined,
+            },
+            style,
+          ]}
+          placeholderTextColor={colors.subtext}
+          multiline={multiline}
+          editable={!disabled}
+          // selectTextOnFocus={!disabled}
+          {...props}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            gap: scale(8),
+          }}
+        >
+          {rightActions}
+        </View>
       </View>
     </Pressable>
   );

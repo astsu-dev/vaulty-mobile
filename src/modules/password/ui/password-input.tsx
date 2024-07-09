@@ -11,7 +11,11 @@ import {
 
 export type PasswordInputProps = Omit<TextInputProps, "secureTextEntry">;
 
-export function PasswordInput({ rightActions, ...props }: PasswordInputProps) {
+export function PasswordInput({
+  rightActions,
+  disabled,
+  ...props
+}: PasswordInputProps) {
   const lang = useLang();
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
@@ -23,17 +27,24 @@ export function PasswordInput({ rightActions, ...props }: PasswordInputProps) {
       rightActions={
         <>
           {secureTextEntry ? (
-            <ScalablePressable onPress={() => setSecureTextEntry(false)}>
+            <ScalablePressable
+              onPress={() => setSecureTextEntry(false)}
+              disabled={disabled}
+            >
               <EyeSlashedIcon size="md" />
             </ScalablePressable>
           ) : (
-            <ScalablePressable onPress={() => setSecureTextEntry(true)}>
+            <ScalablePressable
+              onPress={() => setSecureTextEntry(true)}
+              disabled={disabled}
+            >
               <EyeIcon size="md" />
             </ScalablePressable>
           )}
           {rightActions}
         </>
       }
+      disabled={disabled}
       {...props}
     />
   );

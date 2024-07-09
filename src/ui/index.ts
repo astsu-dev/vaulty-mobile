@@ -1,5 +1,5 @@
 export * from "./icons";
-export { Theme, useTheme } from "./theme";
+export { useTheme } from "./theme";
 export { ScalablePressable } from "./scalable-pressable";
 export { Button } from "./button";
 export { BottomSheet } from "./bottom-sheet";

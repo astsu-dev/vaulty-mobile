@@ -14,6 +14,7 @@ import {
   LanguageSettingsSection,
   useLang,
 } from "@/modules/lang";
+import { RemoteClipboardSettingsSection } from "@/modules/remote-clipboard";
 import { DeleteVaultSheet } from "@/modules/vault";
 import { Button, TrashIcon, useTheme } from "@/ui";
 
@@ -44,6 +45,10 @@ export function SettingsScreen({
     navigation.navigate("ChangeVaultPassword");
   };
 
+  const handleOnRemoteClipboardSettingsPress = () => {
+    navigation.navigate("RemoteClipboardSettings");
+  };
+
   return (
     <BottomSheetModalProvider>
       <ScreenLayout
@@ -71,6 +76,11 @@ export function SettingsScreen({
             <BackupSettingsSection
               onPickBackupFile={handleOnPickBackupFile}
               onChangePasswordPress={handleOnChangePasswordPress}
+            />
+            <RemoteClipboardSettingsSection
+              onPressRemoteClipboardSettingsCard={
+                handleOnRemoteClipboardSettingsPress
+              }
             />
             <LanguageSettingsSection sheetRef={changeLanguageSheetRef} />
           </View>

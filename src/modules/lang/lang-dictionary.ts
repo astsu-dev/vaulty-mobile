@@ -104,6 +104,10 @@ export type LangDictionary = {
     languageSection: {
       label: string;
     };
+    remoteClipboardSection: {
+      label: string;
+      remoteClipboardSettingsCardText: string;
+    };
   };
   importBackupSheet: {
     title: string;
@@ -136,5 +140,15 @@ export type LangDictionary = {
   };
   changeLanguageSheet: {
     title: string;
+  };
+  remoteClipboardSettingsScreen: {
+    headerTitle: string;
+    enableRemoteClipboardCardText: string;
+    urlInputLabel: string;
+    urlInputPlaceholder: string;
+    apiKeyInputLabel: string;
+    apiKeyInputPlaceholder: string;
+    descriptionFirstLine: string;
+    descriptionSecondLine: string;
   };
 };

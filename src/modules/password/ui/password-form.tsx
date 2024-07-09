@@ -6,12 +6,17 @@ import * as Clipboard from "expo-clipboard";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
 import { PasswordCreate } from "../store/password";
-import { useCopyPassword } from "../use-copy-password";
+import { useCopyPassword, useCopyPasswordToRemote } from "../use-copy-password";
 import { PasswordGeneratorUsePasswordSheet } from "./password-generator-use-password-sheet";
 import { PasswordInput } from "./password-input";
 import { useLang } from "@/modules/lang";
 import {
+  useCopyToRemote,
+  useRemoteClipboardSettingsStore,
+} from "@/modules/remote-clipboard";
+import {
   Button,
+  ComputerIcon,
   CopyIcon,
   DiceIcon,
   EmailIcon,
@@ -43,6 +48,11 @@ export function PasswordForm({
     passwordGeneratorSheetRef.current?.present();
   };
   const copyPassword = useCopyPassword();
+  const copyToRemote = useCopyToRemote();
+  const copyPasswordToRemote = useCopyPasswordToRemote();
+  const { enabled: remoteClipboardEnabled } = useRemoteClipboardSettingsStore(
+    (state) => ({ enabled: state.enabled }),
+  );
 
   useEffect(() => {
     setValues(defaultValues);
@@ -58,16 +68,32 @@ export function PasswordForm({
     await copyPassword(values.password);
   };
 
+  const handleOnCopyPasswordToRemotePress = async () => {
+    await copyPasswordToRemote(values.password);
+  };
+
   const handleOnCopyUsernamePress = () => {
     Clipboard.setStringAsync(values.username);
+  };
+
+  const handleOnCopyUsernameToRemotePress = async () => {
+    await copyToRemote(values.username);
   };
 
   const handleOnCopyEmailPress = () => {
     Clipboard.setStringAsync(values.email);
   };
 
+  const handleOnCopyEmailToRemotePress = async () => {
+    await copyToRemote(values.email);
+  };
+
   const handleOnCopyWebsitePress = () => {
     Clipboard.setStringAsync(values.website);
+  };
+
+  const handleOnCopyWebsiteToRemotePress = async () => {
+    await copyToRemote(values.website);
   };
 
   const handleOnSubmitPress = () => {
@@ -117,6 +143,13 @@ export function PasswordForm({
                     <ScalablePressable onPress={handleOnCopyPasswordPress}>
                       <CopyIcon size="md" />
                     </ScalablePressable>
+                    {remoteClipboardEnabled && (
+                      <ScalablePressable
+                        onPress={handleOnCopyPasswordToRemotePress}
+                      >
+                        <ComputerIcon size="md" />
+                      </ScalablePressable>
+                    )}
                   </>
                 }
               />
@@ -130,9 +163,18 @@ export function PasswordForm({
                 }
                 leftIcon={<UserIcon size="md" />}
                 rightActions={
-                  <ScalablePressable onPress={handleOnCopyUsernamePress}>
-                    <CopyIcon size="md" />
-                  </ScalablePressable>
+                  <>
+                    <ScalablePressable onPress={handleOnCopyUsernamePress}>
+                      <CopyIcon size="md" />
+                    </ScalablePressable>
+                    {remoteClipboardEnabled && (
+                      <ScalablePressable
+                        onPress={handleOnCopyUsernameToRemotePress}
+                      >
+                        <ComputerIcon size="md" />
+                      </ScalablePressable>
+                    )}
+                  </>
                 }
               />
             </Labeled>
@@ -145,9 +187,18 @@ export function PasswordForm({
                 }
                 leftIcon={<EmailIcon size="md" />}
                 rightActions={
-                  <ScalablePressable onPress={handleOnCopyEmailPress}>
-                    <CopyIcon size="md" />
-                  </ScalablePressable>
+                  <>
+                    <ScalablePressable onPress={handleOnCopyEmailPress}>
+                      <CopyIcon size="md" />
+                    </ScalablePressable>
+                    {remoteClipboardEnabled && (
+                      <ScalablePressable
+                        onPress={handleOnCopyEmailToRemotePress}
+                      >
+                        <ComputerIcon size="md" />
+                      </ScalablePressable>
+                    )}
+                  </>
                 }
               />
             </Labeled>
@@ -160,9 +211,18 @@ export function PasswordForm({
                 }
                 leftIcon={<LinkIcon size="md" />}
                 rightActions={
-                  <ScalablePressable onPress={handleOnCopyWebsitePress}>
-                    <CopyIcon size="md" />
-                  </ScalablePressable>
+                  <>
+                    <ScalablePressable onPress={handleOnCopyWebsitePress}>
+                      <CopyIcon size="md" />
+                    </ScalablePressable>
+                    {remoteClipboardEnabled && (
+                      <ScalablePressable
+                        onPress={handleOnCopyWebsiteToRemotePress}
+                      >
+                        <ComputerIcon size="md" />
+                      </ScalablePressable>
+                    )}
+                  </>
                 }
               />
             </Labeled>

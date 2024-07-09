@@ -23,6 +23,7 @@
     "expo-font": "~11.10.3",
     "expo-haptics": "~12.8.1",
     "expo-navigation-bar": "~2.8.1",
+    "expo-notifications": "~0.27.7",
     "expo-sharing": "~11.10.0",
     "expo-splash-screen": "~0.26.5",
     "expo-status-bar": "~1.11.1",
@@ -39,8 +40,7 @@
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
     "zod": "^3.23.8",
-    "zustand": "^4.5.2",
-    "expo-notifications": "~0.27.7"
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

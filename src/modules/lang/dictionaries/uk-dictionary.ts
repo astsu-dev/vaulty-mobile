@@ -109,6 +109,10 @@ export const ukDictionary: LangDictionary = {
     languageSection: {
       label: "Мова",
     },
+    remoteClipboardSection: {
+      label: "Віддалений буфер обміну",
+      remoteClipboardSettingsCardText: "Налаштування сервера",
+    },
   },
   importBackupSheet: {
     title: "Імпортувати сховище",
@@ -161,5 +165,15 @@ export const ukDictionary: LangDictionary = {
   },
   changeLanguageSheet: {
     title: "Змінити мову",
+  },
+  remoteClipboardSettingsScreen: {
+    headerTitle: "Віддалений буфер обміну",
+    enableRemoteClipboardCardText: "Віддалений буфер обміну",
+    urlInputLabel: "URL сервера",
+    urlInputPlaceholder: "https://...",
+    apiKeyInputLabel: "API ключ",
+    apiKeyInputPlaceholder: "API ключ",
+    descriptionFirstLine: "Віддалений буфер обміну дозволяє вам",
+    descriptionSecondLine: "копіювати паролі на інший пристрій",
   },
 };

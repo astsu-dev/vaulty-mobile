@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import { ToastAndroid } from "react-native";
 import { clearClipboardWithTimeout } from "@/modules/clipboard";
 import { useLang } from "@/modules/lang";
+import { useCopyToRemote } from "@/modules/remote-clipboard";
 
 export const CLEAR_PASSWORD_FROM_CLIPBOARD_TIMEOUT = 60000;
 
@@ -34,4 +35,20 @@ export function useCopyPassword() {
   );
 
   return copyPassword;
+}
+
+export function useCopyPasswordToRemote() {
+  const copyToRemote = useCopyToRemote();
+
+  const copyPasswordToRemote = useCallback(
+    async (password: string) => {
+      await copyToRemote(
+        password,
+        CLEAR_PASSWORD_FROM_CLIPBOARD_TIMEOUT / 1000,
+      );
+    },
+    [copyToRemote],
+  );
+
+  return copyPasswordToRemote;
 }

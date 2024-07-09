@@ -17,7 +17,12 @@
     ],
     "ios": {
       "userInterfaceStyle": "automatic",
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsArbitraryLoads": true
+        }
+      }
     },
     "android": {
       "userInterfaceStyle": "automatic",
@@ -56,7 +61,8 @@
               "pickFirst": [
                 "**/libcrypto.so"
               ]
-            }
+            },
+            "usesCleartextTraffic": true
           }
         }
       ],

@@ -109,6 +109,10 @@ export const enDictionary: LangDictionary = {
     languageSection: {
       label: "Language",
     },
+    remoteClipboardSection: {
+      label: "Remote clipboard",
+      remoteClipboardSettingsCardText: "Remote clipboard settings",
+    },
   },
   importBackupSheet: {
     title: "Enter a password",
@@ -144,5 +148,15 @@ export const enDictionary: LangDictionary = {
   },
   changeLanguageSheet: {
     title: "Change language",
+  },
+  remoteClipboardSettingsScreen: {
+    headerTitle: "Remote clipboard settings",
+    enableRemoteClipboardCardText: "Enable remote clipboard",
+    urlInputLabel: "Server URL",
+    urlInputPlaceholder: "https://...",
+    apiKeyInputLabel: "API Key",
+    apiKeyInputPlaceholder: "API Key",
+    descriptionFirstLine: "Remote clipboard helps you copy your",
+    descriptionSecondLine: "passwords to another device",
   },
 };

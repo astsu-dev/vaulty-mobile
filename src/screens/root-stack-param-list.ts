@@ -8,4 +8,5 @@ export type RootStackParamList = {
   Settings: undefined;
   ImportBackup: undefined;
   ChangeVaultPassword: undefined;
+  RemoteClipboardSettings: undefined;
 };
