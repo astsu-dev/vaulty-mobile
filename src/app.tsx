@@ -1,6 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
+import * as ScreenCapture from "expo-screen-capture";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AddPasswordScreen } from "@/screens/add-password-screen";
 import { ChangeVaultPasswordScreen } from "@/screens/change-vault-password-screen";
@@ -18,6 +19,7 @@ import { WelcomeScreen } from "@/screens/welcome-screen";
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
+  ScreenCapture.usePreventScreenCapture();
   return (
     <SafeAreaProvider>
       <RootLayout>
