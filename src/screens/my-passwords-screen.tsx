@@ -3,13 +3,15 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import { useLang } from "@/modules/lang";
 import {
+  Password,
   PasswordCard,
   PasswordGeneratorCopySheet,
   searchPasswords,
@@ -83,6 +85,20 @@ export function MyPasswordsScreen({
     navigation.navigate("Settings");
   };
 
+  const renderPassword: ListRenderItem<Password> = useCallback(
+    (password) => (
+      <PasswordCard
+        password={password.item}
+        onPress={() =>
+          navigation.navigate("PasswordOverview", {
+            id: password.item.id,
+          })
+        }
+      />
+    ),
+    [navigation],
+  );
+
   return (
     <BottomSheetModalProvider>
       <ScreenLayout
@@ -121,23 +137,15 @@ export function MyPasswordsScreen({
             }}
           >
             {passwords.length ? (
-              <FlatList
-                contentContainerStyle={{
-                  gap: scale(10),
-                }}
+              <FlashList
                 data={passwords}
-                renderItem={(password) => (
-                  <PasswordCard
-                    password={password.item}
-                    onPress={() =>
-                      navigation.navigate("PasswordOverview", {
-                        id: password.item.id,
-                      })
-                    }
-                  />
-                )}
+                renderItem={renderPassword}
                 keyExtractor={(password) => password.id}
                 showsVerticalScrollIndicator={false}
+                estimatedItemSize={85}
+                ItemSeparatorComponent={() => (
+                  <View style={{ height: scale(10) }} />
+                )}
               />
             ) : (
               <View

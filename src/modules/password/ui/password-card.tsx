@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { memo } from "react";
+import { Text, View, ViewStyle } from "react-native";
 import { Password } from "../store/password";
 import { useCopyPassword, useCopyPasswordToRemote } from "../use-copy-password";
 import { useRemoteClipboardSettingsStore } from "@/modules/remote-clipboard";
@@ -7,9 +8,14 @@ import { ComputerIcon, CopyIcon, ScalablePressable, useTheme } from "@/ui";
 export type PasswordCardProps = {
   password: Pick<Password, "name" | "username" | "password">;
   onPress?: () => void;
+  style?: ViewStyle;
 };
 
-export function PasswordCard({ password, onPress }: PasswordCardProps) {
+export const PasswordCard = memo(function PasswordCard({
+  password,
+  onPress,
+  style,
+}: PasswordCardProps) {
   const { colors, scale } = useTheme();
   const copyPassword = useCopyPassword();
   const copyPasswordToRemote = useCopyPasswordToRemote();
@@ -27,21 +33,25 @@ export function PasswordCard({ password, onPress }: PasswordCardProps) {
 
   return (
     <ScalablePressable
-      style={{
-        justifyContent: "space-between",
-        alignItems: "center",
-        flexDirection: "row",
-        gap: scale(10.5),
-        backgroundColor: colors.secondary,
-        borderRadius: scale(16),
-        paddingStart: scale(20),
-        paddingEnd: scale(14.5),
-        paddingVertical: scale(18),
-      }}
+      style={[
+        {
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexDirection: "row",
+          gap: scale(10.5),
+          backgroundColor: colors.secondary,
+          borderRadius: scale(16),
+          paddingStart: scale(20),
+          paddingEnd: scale(14.5),
+          paddingVertical: scale(18),
+        },
+        style,
+      ]}
       onPress={onPress}
     >
       <View
         style={{
+          flex: 1,
           gap: scale(12),
         }}
       >
@@ -51,6 +61,8 @@ export function PasswordCard({ password, onPress }: PasswordCardProps) {
             fontSize: scale(14),
             color: colors.text,
           }}
+          ellipsizeMode="head"
+          numberOfLines={1}
         >
           {password.name}
         </Text>
@@ -61,6 +73,8 @@ export function PasswordCard({ password, onPress }: PasswordCardProps) {
               fontSize: scale(12),
               color: colors.subtext,
             }}
+            ellipsizeMode="tail"
+            numberOfLines={1}
           >
             {password.username}
           </Text>
@@ -93,4 +107,4 @@ export function PasswordCard({ password, onPress }: PasswordCardProps) {
       </View>
     </ScalablePressable>
   );
-}
+});

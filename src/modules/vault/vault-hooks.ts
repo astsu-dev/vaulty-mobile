@@ -146,10 +146,6 @@ export function useReplaceVault() {
     setEncryptionKey: state.setEncryptionKey,
   }));
 
-  if (remoteClipboardSettingsStore === null) {
-    throw new Error("Remote clipboard settings store is not set");
-  }
-
   const replaceVault = useCallback(
     async (passwords: Password[], encryptionKey: Buffer) => {
       deletePasswordStorage();
@@ -161,12 +157,14 @@ export function useReplaceVault() {
       const newRemoteClipboardSettingsStore =
         createRemoteClipboardSettingsStore(encryptionKey);
       setRemoteClipboardSettingsStore(newRemoteClipboardSettingsStore);
-      const remoteClipboardSettings = remoteClipboardSettingsStore.getState();
-      newRemoteClipboardSettingsStore.setState({
-        enabled: remoteClipboardSettings.enabled,
-        port: remoteClipboardSettings.port,
-        apiKey: remoteClipboardSettings.apiKey,
-      });
+      if (remoteClipboardSettingsStore !== null) {
+        const remoteClipboardSettings = remoteClipboardSettingsStore.getState();
+        newRemoteClipboardSettingsStore.setState({
+          enabled: remoteClipboardSettings.enabled,
+          port: remoteClipboardSettings.port,
+          apiKey: remoteClipboardSettings.apiKey,
+        });
+      }
 
       setTestString(await encrypt(TEST_STRING, encryptionKey));
       setEncryptionKey(encryptionKey);

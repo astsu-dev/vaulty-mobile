@@ -23,6 +23,7 @@ export function PasswordInput({
     <TextInput
       secureTextEntry={secureTextEntry}
       placeholder={lang.passwordInput.placeholder}
+      autoCapitalize="none"
       leftIcon={<KeyIcon size="md" />}
       rightActions={
         <>
