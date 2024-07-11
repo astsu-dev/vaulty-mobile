@@ -152,11 +152,14 @@ export const enDictionary: LangDictionary = {
   remoteClipboardSettingsScreen: {
     headerTitle: "Remote clipboard settings",
     enableRemoteClipboardCardText: "Enable remote clipboard",
-    urlInputLabel: "Server URL",
-    urlInputPlaceholder: "https://...",
+    portInputLabel: "Server Port",
+    portInputPlaceholder: "8090",
     apiKeyInputLabel: "API Key",
     apiKeyInputPlaceholder: "API Key",
     descriptionFirstLine: "Remote clipboard helps you copy your",
     descriptionSecondLine: "passwords to another device",
+  },
+  copyToRemote: {
+    successfullyCopied: "Copied",
   },
 };

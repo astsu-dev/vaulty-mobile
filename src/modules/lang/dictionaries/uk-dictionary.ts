@@ -169,11 +169,14 @@ export const ukDictionary: LangDictionary = {
   remoteClipboardSettingsScreen: {
     headerTitle: "Віддалений буфер обміну",
     enableRemoteClipboardCardText: "Віддалений буфер обміну",
-    urlInputLabel: "URL сервера",
-    urlInputPlaceholder: "https://...",
+    portInputLabel: "Порт сервера",
+    portInputPlaceholder: "8090",
     apiKeyInputLabel: "API ключ",
     apiKeyInputPlaceholder: "API ключ",
     descriptionFirstLine: "Віддалений буфер обміну дозволяє вам",
     descriptionSecondLine: "копіювати паролі на інший пристрій",
+  },
+  copyToRemote: {
+    successfullyCopied: "Скопійовано",
   },
 };

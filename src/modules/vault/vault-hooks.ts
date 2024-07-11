@@ -11,12 +11,22 @@ import {
   deletePasswordStorage,
   usePasswordStoreContainerStore,
 } from "@/modules/password";
+import {
+  createRemoteClipboardSettingsStore,
+  deleteRemoteClipboardSettingsStorage,
+  useRemoteClipboardSettingsContainerStore,
+} from "@/modules/remote-clipboard";
 import { InvalidKeyError, decrypt, encrypt, pbkdf2 } from "@/utils/crypto";
 
 export function useDeleteVault() {
   const { clearPasswordStore } = usePasswordStoreContainerStore((state) => ({
     clearPasswordStore: state.clearPasswordStore,
   }));
+  const { clearRemoteClipboardSettingsStore } =
+    useRemoteClipboardSettingsContainerStore((state) => ({
+      clearRemoteClipboardSettingsStore:
+        state.clearRemoteClipboardSettingsStore,
+    }));
   const { clearTestString } = useVaultMetadataStore((state) => ({
     clearTestString: state.clearTestString,
   }));
@@ -27,9 +37,16 @@ export function useDeleteVault() {
   const deleteVault = useCallback(() => {
     deletePasswordStorage();
     clearPasswordStore();
+    deleteRemoteClipboardSettingsStorage();
+    clearRemoteClipboardSettingsStore();
     clearTestString();
     clearEncryptionKey();
-  }, [clearPasswordStore, clearTestString, clearEncryptionKey]);
+  }, [
+    clearPasswordStore,
+    clearRemoteClipboardSettingsStore,
+    clearTestString,
+    clearEncryptionKey,
+  ]);
 
   return deleteVault;
 }
@@ -42,6 +59,10 @@ export function useUnlockVault() {
   const { setPasswordStore } = usePasswordStoreContainerStore((state) => ({
     setPasswordStore: state.setPasswordStore,
   }));
+  const { setRemoteClipboardSettingsStore } =
+    useRemoteClipboardSettingsContainerStore((state) => ({
+      setRemoteClipboardSettingsStore: state.setRemoteClipboardSettingsStore,
+    }));
   const { setEncryptionKey } = useVaultCredentialsStore((state) => ({
     setEncryptionKey: state.setEncryptionKey,
   }));
@@ -63,9 +84,15 @@ export function useUnlockVault() {
       }
 
       setPasswordStore(createPasswordStore(key));
+      setRemoteClipboardSettingsStore(createRemoteClipboardSettingsStore(key));
       setEncryptionKey(key);
     },
-    [setPasswordStore, setEncryptionKey, testString],
+    [
+      setPasswordStore,
+      setRemoteClipboardSettingsStore,
+      setEncryptionKey,
+      testString,
+    ],
   );
 
   return unlockVault;
@@ -78,6 +105,10 @@ export function useCreateVault() {
   const { setPasswordStore } = usePasswordStoreContainerStore((state) => ({
     setPasswordStore: state.setPasswordStore,
   }));
+  const { setRemoteClipboardSettingsStore } =
+    useRemoteClipboardSettingsContainerStore((state) => ({
+      setRemoteClipboardSettingsStore: state.setRemoteClipboardSettingsStore,
+    }));
   const { setEncryptionKey } = useVaultCredentialsStore((state) => ({
     setEncryptionKey: state.setEncryptionKey,
   }));
@@ -88,9 +119,15 @@ export function useCreateVault() {
       const key = await pbkdf2(password);
       setTestString(await encrypt(TEST_STRING, key));
       setPasswordStore(createPasswordStore(key));
+      setRemoteClipboardSettingsStore(createRemoteClipboardSettingsStore(key));
       setEncryptionKey(key);
     },
-    [setTestString, setPasswordStore, setEncryptionKey],
+    [
+      setTestString,
+      setPasswordStore,
+      setRemoteClipboardSettingsStore,
+      setEncryptionKey,
+    ],
   );
 
   return createVault;
@@ -100,6 +137,8 @@ export function useReplaceVault() {
   const { setPasswordStore } = usePasswordStoreContainerStore((state) => ({
     setPasswordStore: state.setPasswordStore,
   }));
+  const { remoteClipboardSettingsStore, setRemoteClipboardSettingsStore } =
+    useRemoteClipboardSettingsContainerStore();
   const { setTestString } = useVaultMetadataStore((state) => ({
     setTestString: state.setTestString,
   }));
@@ -107,16 +146,38 @@ export function useReplaceVault() {
     setEncryptionKey: state.setEncryptionKey,
   }));
 
+  if (remoteClipboardSettingsStore === null) {
+    throw new Error("Remote clipboard settings store is not set");
+  }
+
   const replaceVault = useCallback(
     async (passwords: Password[], encryptionKey: Buffer) => {
       deletePasswordStorage();
       const newPasswordStore = createPasswordStore(encryptionKey);
       setPasswordStore(newPasswordStore);
       newPasswordStore.setState({ passwords });
+
+      deleteRemoteClipboardSettingsStorage();
+      const newRemoteClipboardSettingsStore =
+        createRemoteClipboardSettingsStore(encryptionKey);
+      setRemoteClipboardSettingsStore(newRemoteClipboardSettingsStore);
+      const remoteClipboardSettings = remoteClipboardSettingsStore.getState();
+      newRemoteClipboardSettingsStore.setState({
+        enabled: remoteClipboardSettings.enabled,
+        port: remoteClipboardSettings.port,
+        apiKey: remoteClipboardSettings.apiKey,
+      });
+
       setTestString(await encrypt(TEST_STRING, encryptionKey));
       setEncryptionKey(encryptionKey);
     },
-    [setTestString, setPasswordStore, setEncryptionKey],
+    [
+      setTestString,
+      setPasswordStore,
+      remoteClipboardSettingsStore,
+      setRemoteClipboardSettingsStore,
+      setEncryptionKey,
+    ],
   );
 
   return replaceVault;
@@ -124,6 +185,8 @@ export function useReplaceVault() {
 
 export function useChangeVaultPassword() {
   const { passwordStore, setPasswordStore } = usePasswordStoreContainerStore();
+  const { remoteClipboardSettingsStore, setRemoteClipboardSettingsStore } =
+    useRemoteClipboardSettingsContainerStore();
   const { setTestString } = useVaultMetadataStore((state) => ({
     setTestString: state.setTestString,
   }));
@@ -135,19 +198,42 @@ export function useChangeVaultPassword() {
     throw new Error("Password store is not set");
   }
 
+  if (remoteClipboardSettingsStore === null) {
+    throw new Error("Remote clipboard settings store is not set");
+  }
+
   const changeVaultPassword = useCallback(
     async (newPassword: string) => {
       deletePasswordStorage();
       const newKey = await pbkdf2(newPassword);
+
       const newPasswordStore = createPasswordStore(newKey);
       setPasswordStore(newPasswordStore);
       newPasswordStore.setState({
         passwords: passwordStore.getState().passwords,
       });
+
+      const newRemoteClipboardSettingsStore =
+        createRemoteClipboardSettingsStore(newKey);
+      setRemoteClipboardSettingsStore(newRemoteClipboardSettingsStore);
+      const remoteClipboardSettings = remoteClipboardSettingsStore.getState();
+      newRemoteClipboardSettingsStore.setState({
+        enabled: remoteClipboardSettings.enabled,
+        port: remoteClipboardSettings.port,
+        apiKey: remoteClipboardSettings.apiKey,
+      });
+
       setTestString(await encrypt(TEST_STRING, newKey));
       setEncryptionKey(newKey);
     },
-    [passwordStore, setPasswordStore, setTestString, setEncryptionKey],
+    [
+      passwordStore,
+      setPasswordStore,
+      remoteClipboardSettingsStore,
+      setRemoteClipboardSettingsStore,
+      setTestString,
+      setEncryptionKey,
+    ],
   );
 
   return changeVaultPassword;

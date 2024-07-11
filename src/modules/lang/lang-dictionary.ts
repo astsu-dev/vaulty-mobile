@@ -144,11 +144,14 @@ export type LangDictionary = {
   remoteClipboardSettingsScreen: {
     headerTitle: string;
     enableRemoteClipboardCardText: string;
-    urlInputLabel: string;
-    urlInputPlaceholder: string;
+    portInputLabel: string;
+    portInputPlaceholder: string;
     apiKeyInputLabel: string;
     apiKeyInputPlaceholder: string;
     descriptionFirstLine: string;
     descriptionSecondLine: string;
+  };
+  copyToRemote: {
+    successfullyCopied: string;
   };
 };

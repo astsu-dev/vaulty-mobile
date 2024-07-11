@@ -3,7 +3,7 @@
     "name": "Vaulty",
     "slug": "vaulty",
     "scheme": "vaulty",
-    "version": "1.0.0",
+    "version": "0.1.0-aplha.4",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -12,10 +12,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
+      "buildNumber": "1",
       "userInterfaceStyle": "automatic",
       "supportsTablet": true,
       "infoPlist": {
@@ -25,6 +24,7 @@
       }
     },
     "android": {
+      "versionCode": "1",
       "userInterfaceStyle": "automatic",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
@@ -58,17 +58,13 @@
         {
           "android": {
             "packagingOptions": {
-              "pickFirst": [
-                "**/libcrypto.so"
-              ]
+              "pickFirst": ["**/libcrypto.so"]
             },
             "usesCleartextTraffic": true
           }
         }
       ],
-      [
-        "./plugins/expo-foreground-actions"
-      ]
+      ["./plugins/expo-foreground-actions"]
     ]
   }
 }

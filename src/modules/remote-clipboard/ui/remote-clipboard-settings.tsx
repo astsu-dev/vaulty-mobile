@@ -1,21 +1,16 @@
 import { Text, View } from "react-native";
-import { useRemoteClipboardSettingsStore } from "../store/remote-clipboard-settings-store";
+import { useRemoteClipboardSettingsStore } from "../store/use-remote-clipboard-settings-store";
 import { useLang } from "@/modules/lang";
 import { PasswordInput } from "@/modules/password";
 import { SettingsCard } from "@/modules/settings";
-import {
-  ComputerIcon,
-  Labeled,
-  LinkIcon,
-  Switch,
-  TextInput,
-  useTheme,
-} from "@/ui";
+import { ComputerIcon, Labeled, Switch, TextInput, useTheme } from "@/ui";
 
 export function RemoteClipboardSettings() {
   const { colors, scale } = useTheme();
   const lang = useLang();
-  const { enabled, url, apiKey, setState } = useRemoteClipboardSettingsStore();
+  const { enabled, port, apiKey, setState } = useRemoteClipboardSettingsStore(
+    (state) => state,
+  );
 
   const handleOnChangeEnableRemoteClipboard = (enabled: boolean) => {
     setState({ enabled });
@@ -48,13 +43,17 @@ export function RemoteClipboardSettings() {
           gap: scale(10),
         }}
       >
-        <Labeled label={lang.remoteClipboardSettingsScreen.urlInputLabel}>
+        <Labeled label={lang.remoteClipboardSettingsScreen.portInputLabel}>
           <TextInput
-            value={url}
-            placeholder={lang.remoteClipboardSettingsScreen.urlInputPlaceholder}
+            keyboardType="numeric"
+            value={String(port)}
+            placeholder={
+              lang.remoteClipboardSettingsScreen.portInputPlaceholder
+            }
             disabled={!enabled}
-            onChangeText={(url) => setState({ url: url.trim() })}
-            leftIcon={<LinkIcon size="md" />}
+            onChangeText={(port) =>
+              setState({ port: Number(port.trim()) || 0 })
+            }
           />
         </Labeled>
         <Labeled label={lang.remoteClipboardSettingsScreen.apiKeyInputLabel}>
