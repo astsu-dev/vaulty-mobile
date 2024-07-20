@@ -3,14 +3,14 @@
     "name": "Vaulty",
     "slug": "vaulty",
     "scheme": "vaulty",
-    "version": "0.1.0-aplha.5",
+    "version": "0.1.0-aplha.6",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#111111"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -28,7 +28,7 @@
       "userInterfaceStyle": "automatic",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#111111"
       },
       "package": "com.astsu_dev.vaulty",
       "permissions": [

@@ -47,10 +47,13 @@ export function MyPasswordsScreen({
     passwords: state.passwords,
   }));
 
-  const passwordNames = passwords.map((password) => password.name);
+  const passwordNames = useMemo(
+    () => passwords.map((password) => password.name),
+    [passwords],
+  );
   passwords = useMemo(
     () =>
-      passwords.sort((password) => {
+      [...passwords].sort((password) => {
         if (password.name < password.name) {
           return -1;
         }
