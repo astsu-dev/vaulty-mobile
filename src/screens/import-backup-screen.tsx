@@ -18,9 +18,14 @@ import {
   useBackupFileStore,
 } from "@/modules/backup";
 import { useLang } from "@/modules/lang";
-import { PasswordInput } from "@/modules/password";
 import { useReplaceVault } from "@/modules/vault";
-import { ScalablePressable, useTheme, RightArrowIcon, EASING } from "@/ui";
+import {
+  ScalablePressable,
+  useTheme,
+  RightArrowIcon,
+  EASING,
+  PasswordInput,
+} from "@/ui";
 import { pbkdf2 } from "@/utils/crypto";
 
 export function ImportBackupScreen({
@@ -175,6 +180,7 @@ export function ImportBackupScreen({
               containerStyle={{
                 flex: 1,
               }}
+              placeholder={lang.passwordInput.placeholder}
             />
             <ScalablePressable
               style={[

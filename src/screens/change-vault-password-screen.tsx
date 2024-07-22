@@ -13,9 +13,14 @@ import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import { useLang } from "@/modules/lang";
-import { PasswordInput } from "@/modules/password";
 import { useChangeVaultPassword } from "@/modules/vault";
-import { ScalablePressable, useTheme, RightArrowIcon, EASING } from "@/ui";
+import {
+  ScalablePressable,
+  useTheme,
+  RightArrowIcon,
+  EASING,
+  PasswordInput,
+} from "@/ui";
 
 export function ChangeVaultPasswordScreen({
   navigation,
@@ -149,6 +154,7 @@ export function ChangeVaultPasswordScreen({
               containerStyle={{
                 flex: 1,
               }}
+              placeholder={lang.passwordInput.placeholder}
             />
             <ScalablePressable
               style={[

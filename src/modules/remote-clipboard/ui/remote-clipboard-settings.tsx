@@ -1,9 +1,15 @@
 import { Text, View } from "react-native";
 import { useRemoteClipboardSettingsStore } from "../store/use-remote-clipboard-settings-store";
 import { useLang } from "@/modules/lang";
-import { PasswordInput } from "@/modules/password";
 import { SettingsCard } from "@/modules/settings";
-import { ComputerIcon, Labeled, Switch, TextInput, useTheme } from "@/ui";
+import {
+  ComputerIcon,
+  Labeled,
+  PasswordInput,
+  Switch,
+  TextInput,
+  useTheme,
+} from "@/ui";
 
 export function RemoteClipboardSettings() {
   const { colors, scale } = useTheme();

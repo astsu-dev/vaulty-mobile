@@ -17,7 +17,7 @@ import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import { useLang } from "@/modules/lang";
-import { PasswordInput, PasswordGeneratorCopySheet } from "@/modules/password";
+import { PasswordGeneratorCopySheet } from "@/modules/password";
 import { DeleteVaultSheet, useUnlockVault } from "@/modules/vault";
 import {
   ScalablePressable,
@@ -26,6 +26,7 @@ import {
   RightArrowIcon,
   EASING,
   TrashIcon,
+  PasswordInput,
 } from "@/ui";
 import { InvalidKeyError } from "@/utils/crypto";
 
@@ -197,6 +198,7 @@ export function UnlockVaultScreen({
                 containerStyle={{
                   flex: 1,
                 }}
+                placeholder={lang.passwordInput.placeholder}
               />
               <ScalablePressable
                 style={[

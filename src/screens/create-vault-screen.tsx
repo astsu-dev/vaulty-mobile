@@ -17,7 +17,7 @@ import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import { useLang } from "@/modules/lang";
-import { PasswordInput, PasswordGeneratorCopySheet } from "@/modules/password";
+import { PasswordGeneratorCopySheet } from "@/modules/password";
 import { useCreateVault } from "@/modules/vault";
 import {
   ScalablePressable,
@@ -25,6 +25,7 @@ import {
   DiceIcon,
   RightArrowIcon,
   EASING,
+  PasswordInput,
 } from "@/ui";
 
 export function CreateVaultScreen({
@@ -163,6 +164,7 @@ export function CreateVaultScreen({
                 containerStyle={{
                   flex: 1,
                 }}
+                placeholder={lang.passwordInput.placeholder}
               />
               <ScalablePressable
                 style={[

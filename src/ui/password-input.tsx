@@ -1,29 +1,22 @@
 import { useState } from "react";
-import { useLang } from "@/modules/lang";
-import {
-  EyeIcon,
-  EyeSlashedIcon,
-  KeyIcon,
-  ScalablePressable,
-  TextInput,
-  TextInputProps,
-} from "@/ui";
+import { EyeIcon, EyeSlashedIcon, KeyIcon } from "./icons";
+import { ScalablePressable } from "./scalable-pressable";
+import { TextInput, TextInputProps } from "./text-input";
 
 export type PasswordInputProps = Omit<TextInputProps, "secureTextEntry">;
 
 export function PasswordInput({
   rightActions,
   disabled,
+  autoCapitalize = "none",
   ...props
 }: PasswordInputProps) {
-  const lang = useLang();
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
   return (
     <TextInput
       secureTextEntry={secureTextEntry}
-      placeholder={lang.passwordInput.placeholder}
-      autoCapitalize="none"
+      autoCapitalize={autoCapitalize}
       leftIcon={<KeyIcon size="md" />}
       rightActions={
         <>

@@ -1,7 +1,6 @@
 export { PasswordGeneratorSheet } from "./ui/password-generator-sheet";
 export { PasswordGeneratorCopySheet } from "./ui/password-generator-copy-sheet";
 export { PasswordGeneratorUsePasswordSheet } from "./ui/password-generator-use-password-sheet";
-export { PasswordInput } from "./ui/password-input";
 export {
   deletePasswordStorage,
   createPasswordStore,

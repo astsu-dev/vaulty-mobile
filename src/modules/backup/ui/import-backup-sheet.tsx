@@ -12,9 +12,8 @@ import {
 import { InvalidKeyOrCorruptedBackupError, getBackupFromFile } from "../import";
 import { useBackupFileStore } from "../store/backup-file-store";
 import { useLang } from "@/modules/lang";
-import { PasswordInput } from "@/modules/password";
 import { useReplaceVault } from "@/modules/vault";
-import { BottomSheet, Button, EASING, useTheme } from "@/ui";
+import { PasswordInput, BottomSheet, Button, EASING, useTheme } from "@/ui";
 import { pbkdf2 } from "@/utils/crypto";
 
 export type ImportBackupSheetProps = {
@@ -148,6 +147,7 @@ export function ImportBackupSheet({
           value={password}
           onChangeText={setPassword}
           insideSheet
+          placeholder={lang.passwordInput.placeholder}
         />
         <View
           style={{

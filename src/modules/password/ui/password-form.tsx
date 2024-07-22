@@ -8,7 +8,6 @@ import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
 import { PasswordCreate } from "../store/password";
 import { useCopyPassword, useCopyPasswordToRemote } from "../use-copy-password";
 import { PasswordGeneratorUsePasswordSheet } from "./password-generator-use-password-sheet";
-import { PasswordInput } from "./password-input";
 import { useLang } from "@/modules/lang";
 import {
   useCopyToRemote,
@@ -23,6 +22,7 @@ import {
   LabelIcon,
   Labeled,
   LinkIcon,
+  PasswordInput,
   ScalablePressable,
   TextInput,
   UserIcon,
@@ -152,6 +152,7 @@ export function PasswordForm({
                     )}
                   </>
                 }
+                placeholder={lang.passwordInput.placeholder}
               />
             </Labeled>
             <Labeled label={lang.passwordForm.usernameInput.label}>
