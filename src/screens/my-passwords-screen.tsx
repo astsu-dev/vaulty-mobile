@@ -149,6 +149,11 @@ export function MyPasswordsScreen({
                 ItemSeparatorComponent={() => (
                   <View style={{ height: scale(10) }} />
                 )}
+                ListFooterComponent={
+                  passwords.length
+                    ? () => <View style={{ height: scale(82) }} />
+                    : undefined
+                }
               />
             ) : (
               <View
@@ -184,7 +189,7 @@ export function MyPasswordsScreen({
             <ScalablePressable
               style={{
                 position: "absolute",
-                bottom: 0,
+                bottom: scale(8),
                 end: 0,
                 backgroundColor: colors.text,
                 padding: scale(8),

@@ -6,15 +6,15 @@ import { useLang } from "@/modules/lang";
 
 export function useCopyToRemote() {
   const lang = useLang();
-  const { port, apiKey } = useRemoteClipboardSettingsStore((state) => ({
+  const { port, password } = useRemoteClipboardSettingsStore((state) => ({
     port: state.port,
-    apiKey: state.apiKey,
+    password: state.password,
   }));
 
   const copyToRemote = useCallback(
     async (text: string, expiresIn?: number) => {
       try {
-        await RemoteClipboardAPI.setClipboard(port, apiKey, text, expiresIn);
+        await RemoteClipboardAPI.setClipboard(port, password, text, expiresIn);
         ToastAndroid.show(
           lang.copyToRemote.successfullyCopied,
           ToastAndroid.SHORT,
@@ -26,7 +26,7 @@ export function useCopyToRemote() {
         );
       }
     },
-    [port, apiKey, lang],
+    [port, password, lang],
   );
 
   return copyToRemote;

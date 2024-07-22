@@ -3,7 +3,7 @@
     "name": "Vaulty",
     "slug": "vaulty",
     "scheme": "vaulty",
-    "version": "0.1.0-aplha.6",
+    "version": "0.1.0-aplha.7",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
@@ -24,7 +24,7 @@
       }
     },
     "android": {
-      "versionCode": "1",
+      "versionCode": 1,
       "userInterfaceStyle": "automatic",
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/adaptive-icon.png",

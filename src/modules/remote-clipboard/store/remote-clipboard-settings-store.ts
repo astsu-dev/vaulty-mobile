@@ -14,8 +14,8 @@ export type RemoteClipboardSettingsStoreState = {
   /** The port of the UDP remote clipboard server */
   port: number;
 
-  /** The API key to authenticate with the remote clipboard server. */
-  apiKey: string;
+  /** The password to authenticate with the remote clipboard server. */
+  password: string;
 };
 
 export type RemoteClipboardSettingsStoreActions = {
@@ -31,8 +31,8 @@ export function createRemoteClipboardSettingsStore(key: Buffer) {
     persist(
       (set) => ({
         enabled: false,
-        port: 0,
-        apiKey: "",
+        port: 8090,
+        password: "",
         setState: set,
       }),
       {

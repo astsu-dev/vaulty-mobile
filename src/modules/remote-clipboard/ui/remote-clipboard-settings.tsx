@@ -8,7 +8,7 @@ import { ComputerIcon, Labeled, Switch, TextInput, useTheme } from "@/ui";
 export function RemoteClipboardSettings() {
   const { colors, scale } = useTheme();
   const lang = useLang();
-  const { enabled, port, apiKey, setState } = useRemoteClipboardSettingsStore(
+  const { enabled, port, password, setState } = useRemoteClipboardSettingsStore(
     (state) => state,
   );
 
@@ -56,14 +56,14 @@ export function RemoteClipboardSettings() {
             }
           />
         </Labeled>
-        <Labeled label={lang.remoteClipboardSettingsScreen.apiKeyInputLabel}>
+        <Labeled label={lang.remoteClipboardSettingsScreen.passwordInputLabel}>
           <PasswordInput
-            value={apiKey}
+            value={password}
             placeholder={
-              lang.remoteClipboardSettingsScreen.apiKeyInputPlaceholder
+              lang.remoteClipboardSettingsScreen.passwordInputPlaceholder
             }
             disabled={!enabled}
-            onChangeText={(apiKey) => setState({ apiKey: apiKey.trim() })}
+            onChangeText={(password) => setState({ password: password.trim() })}
           />
         </Labeled>
       </View>

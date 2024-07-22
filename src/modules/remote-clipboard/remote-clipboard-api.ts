@@ -8,7 +8,7 @@ export class RemoteClipboardAPI {
 
   static async setClipboard(
     port: number,
-    apiKey: string,
+    password: string,
     text: string,
     expiresIn?: number,
   ): Promise<void> {
@@ -16,7 +16,7 @@ export class RemoteClipboardAPI {
     const data = JSON.stringify({
       data: await encrypt(
         JSON.stringify({ text, expiresIn }),
-        await pbkdf2(apiKey),
+        await pbkdf2(password),
       ),
     });
     const broadcastAddress = await getBroadcastAddress();

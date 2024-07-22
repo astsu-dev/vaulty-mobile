@@ -146,8 +146,8 @@ export type LangDictionary = {
     enableRemoteClipboardCardText: string;
     portInputLabel: string;
     portInputPlaceholder: string;
-    apiKeyInputLabel: string;
-    apiKeyInputPlaceholder: string;
+    passwordInputLabel: string;
+    passwordInputPlaceholder: string;
     descriptionFirstLine: string;
     descriptionSecondLine: string;
   };

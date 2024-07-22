@@ -162,7 +162,7 @@ export function useReplaceVault() {
         newRemoteClipboardSettingsStore.setState({
           enabled: remoteClipboardSettings.enabled,
           port: remoteClipboardSettings.port,
-          apiKey: remoteClipboardSettings.apiKey,
+          password: remoteClipboardSettings.password,
         });
       }
 
@@ -218,7 +218,7 @@ export function useChangeVaultPassword() {
       newRemoteClipboardSettingsStore.setState({
         enabled: remoteClipboardSettings.enabled,
         port: remoteClipboardSettings.port,
-        apiKey: remoteClipboardSettings.apiKey,
+        password: remoteClipboardSettings.password,
       });
 
       setTestString(await encrypt(TEST_STRING, newKey));
