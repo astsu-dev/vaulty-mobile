@@ -29,7 +29,7 @@ export const ukDictionary: LangDictionary = {
   myPasswordsScreen: {
     headerTitle: "Мої паролі",
     emptyStateFirstLine: "У вас ще немає паролів.",
-    emptyStateSecondLine: 'Натисніть на "+" щоб додати новий',
+    emptyStateSecondLine: 'Натисніть на "+", щоб додати новий',
     searchPlaceholder: "Пошук",
   },
   unlockVaultScreen: {
@@ -99,6 +99,7 @@ export const ukDictionary: LangDictionary = {
       label: "Вигляд",
       darkModeCardText: "Темна тема",
       useSystemSettingsCardText: "Системні налаштування",
+      passwordNameTruncateStyleCardText: "Стиль обрізання назви паролю",
     },
     backupSection: {
       label: "Резервне копіювання",
@@ -178,5 +179,10 @@ export const ukDictionary: LangDictionary = {
   },
   copyToRemote: {
     successfullyCopied: "Скопійовано",
+  },
+  changePasswordNameTruncateStyleSheet: {
+    title: "Стиль обрізання назви паролю",
+    fromLeftValue: "Зліва (…роль)",
+    fromRightValue: "Справа (паро…)",
   },
 };

@@ -2,6 +2,10 @@ import { memo } from "react";
 import { Text, View, ViewStyle } from "react-native";
 import { Password } from "../store/password";
 import { useCopyPassword, useCopyPasswordToRemote } from "../use-copy-password";
+import {
+  PasswordNameTruncateStyle,
+  useAppearanceSettingsStore,
+} from "@/modules/appearance";
 import { useRemoteClipboardSettingsStore } from "@/modules/remote-clipboard";
 import { ComputerIcon, CopyIcon, ScalablePressable, useTheme } from "@/ui";
 
@@ -22,6 +26,9 @@ export const PasswordCard = memo(function PasswordCard({
   const { enabled: remoteClipboardEnabled } = useRemoteClipboardSettingsStore(
     (state) => ({ enabled: state.enabled }),
   );
+  const { passwordNameTruncateStyle } = useAppearanceSettingsStore((state) => ({
+    passwordNameTruncateStyle: state.passwordNameTruncateStyle,
+  }));
 
   const handleOnCopyPasswordPress = async () => {
     await copyPassword(password.password);
@@ -61,7 +68,11 @@ export const PasswordCard = memo(function PasswordCard({
             fontSize: scale(14),
             color: colors.text,
           }}
-          ellipsizeMode="head"
+          ellipsizeMode={
+            passwordNameTruncateStyle === PasswordNameTruncateStyle.FROM_LEFT
+              ? "head"
+              : "tail"
+          }
           numberOfLines={1}
         >
           {password.name}

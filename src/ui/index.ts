@@ -9,3 +9,4 @@ export { Switch } from "./switch";
 export { TextInput, TextInputProps } from "./text-input";
 export { Labeled } from "./labeled";
 export { PasswordInput } from "./password-input";
+export { ValuePickerSheet, type ValuePickerValue } from "./value-picker-sheet";

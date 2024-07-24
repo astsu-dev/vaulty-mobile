@@ -1,9 +1,16 @@
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import { useLang } from "@/modules/lang";
 import { SettingsCard, SettingsSection } from "@/modules/settings";
-import { MoonIcon, PhoneIcon, Switch, useTheme } from "@/ui";
+import { LabelIcon, MoonIcon, PhoneIcon, Switch, useTheme } from "@/ui";
 import { useThemeStore } from "@/ui/theme";
 
-export function AppearanceSettingsSection() {
+export type AppearanceSettingsSectionProps = {
+  changePasswordNameTruncateStyleSheetRef: React.RefObject<BottomSheetModal>;
+};
+
+export function AppearanceSettingsSection({
+  changePasswordNameTruncateStyleSheetRef,
+}: AppearanceSettingsSectionProps) {
   const lang = useLang();
   const { theme, setTheme } = useThemeStore();
   const { colorScheme } = useTheme();
@@ -26,6 +33,10 @@ export function AppearanceSettingsSection() {
 
   const handleOnPressUseSystemCard = () => {
     handleOnChangeUseSystem(theme !== "system");
+  };
+
+  const handleOnPressPasswordNameTruncateStyleCard = () => {
+    changePasswordNameTruncateStyleSheetRef.current?.present();
   };
 
   return (
@@ -55,6 +66,11 @@ export function AppearanceSettingsSection() {
           />
         }
         onPress={handleOnPressUseSystemCard}
+      />
+      <SettingsCard
+        text={lang.settings.appearanceSection.passwordNameTruncateStyleCardText}
+        leftIcon={<LabelIcon size="md" />}
+        onPress={handleOnPressPasswordNameTruncateStyleCard}
       />
     </SettingsSection>
   );

@@ -7,7 +7,10 @@ import { useRef } from "react";
 import { ScrollView, View } from "react-native";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
-import { AppearanceSettingsSection } from "@/modules/appearance";
+import {
+  AppearanceSettingsSection,
+  ChangePasswordNameTruncateStyleSheet,
+} from "@/modules/appearance";
 import { BackupSettingsSection } from "@/modules/backup";
 import {
   ChangeLanguageSheet,
@@ -25,6 +28,8 @@ export function SettingsScreen({
   const lang = useLang();
   const changeLanguageSheetRef = useRef<BottomSheetModal>(null);
   const deleteVaultSheetRef = useRef<BottomSheetModal>(null);
+  const changePasswordNameTruncateStyleSheetRef =
+    useRef<BottomSheetModal>(null);
 
   const handleOnPressPresentDeleteVaultSheet = () => {
     deleteVaultSheetRef.current?.present();
@@ -72,7 +77,11 @@ export function SettingsScreen({
               gap: scale(16),
             }}
           >
-            <AppearanceSettingsSection />
+            <AppearanceSettingsSection
+              changePasswordNameTruncateStyleSheetRef={
+                changePasswordNameTruncateStyleSheetRef
+              }
+            />
             <BackupSettingsSection
               onPickBackupFile={handleOnPickBackupFile}
               onChangePasswordPress={handleOnChangePasswordPress}
@@ -96,6 +105,9 @@ export function SettingsScreen({
       <DeleteVaultSheet
         sheetRef={deleteVaultSheetRef}
         onDelete={handleOnDeleteVault}
+      />
+      <ChangePasswordNameTruncateStyleSheet
+        sheetRef={changePasswordNameTruncateStyleSheetRef}
       />
     </BottomSheetModalProvider>
   );

@@ -99,6 +99,7 @@ export const enDictionary: LangDictionary = {
       label: "Appearance",
       darkModeCardText: "Dark mode",
       useSystemSettingsCardText: "Use system settings",
+      passwordNameTruncateStyleCardText: "Password name truncation style",
     },
     backupSection: {
       label: "Backup",
@@ -161,5 +162,10 @@ export const enDictionary: LangDictionary = {
   },
   copyToRemote: {
     successfullyCopied: "Copied",
+  },
+  changePasswordNameTruncateStyleSheet: {
+    title: "Password name truncation style",
+    fromLeftValue: "From left (…ssword)",
+    fromRightValue: "From right (passwo…)",
   },
 };

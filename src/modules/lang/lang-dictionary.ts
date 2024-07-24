@@ -94,6 +94,7 @@ export type LangDictionary = {
       label: string;
       darkModeCardText: string;
       useSystemSettingsCardText: string;
+      passwordNameTruncateStyleCardText: string;
     };
     backupSection: {
       label: string;
@@ -153,5 +154,10 @@ export type LangDictionary = {
   };
   copyToRemote: {
     successfullyCopied: string;
+  };
+  changePasswordNameTruncateStyleSheet: {
+    title: string;
+    fromLeftValue: string;
+    fromRightValue: string;
   };
 };
