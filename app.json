@@ -3,7 +3,7 @@
     "name": "Vaulty",
     "slug": "vaulty",
     "scheme": "vaulty",
-    "version": "0.1.0-aplha.8",
+    "version": "0.1.0-alpha.9",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",

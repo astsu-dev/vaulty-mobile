@@ -174,8 +174,8 @@ export const ukDictionary: LangDictionary = {
     portInputPlaceholder: "8090",
     passwordInputLabel: "Пароль",
     passwordInputPlaceholder: "Пароль",
-    descriptionFirstLine: "Віддалений буфер обміну дозволяє вам",
-    descriptionSecondLine: "копіювати паролі на інший пристрій",
+    description:
+      "Віддалений буфер обміну дозволяє копіювати паролі на інший пристрій. Важливо використовувати сильний пароль, оскільки він використовується для шифрування даних під час їх передачі між пристроями.",
   },
   copyToRemote: {
     successfullyCopied: "Скопійовано",

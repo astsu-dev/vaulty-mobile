@@ -149,8 +149,7 @@ export type LangDictionary = {
     portInputPlaceholder: string;
     passwordInputLabel: string;
     passwordInputPlaceholder: string;
-    descriptionFirstLine: string;
-    descriptionSecondLine: string;
+    description: string;
   };
   copyToRemote: {
     successfullyCopied: string;

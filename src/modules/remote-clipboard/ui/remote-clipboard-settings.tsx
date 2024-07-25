@@ -82,9 +82,7 @@ export function RemoteClipboardSettings() {
           color: colors.subtext2,
         }}
       >
-        {lang.remoteClipboardSettingsScreen.descriptionFirstLine}
-        {"\n"}
-        {lang.remoteClipboardSettingsScreen.descriptionSecondLine}
+        {lang.remoteClipboardSettingsScreen.description}
       </Text>
     </View>
   );

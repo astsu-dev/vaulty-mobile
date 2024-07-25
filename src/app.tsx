@@ -20,6 +20,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function App() {
   ScreenCapture.usePreventScreenCapture();
+
   return (
     <SafeAreaProvider>
       <RootLayout>

@@ -45,7 +45,7 @@
     "zod": "^3.23.8",
     "zustand": "^4.5.2",
     "@shopify/flash-list": "1.6.3",
-    "expo-screen-capture": "~5.8.1"
+    "expo-screen-capture": "5.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

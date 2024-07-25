@@ -157,8 +157,8 @@ export const enDictionary: LangDictionary = {
     portInputPlaceholder: "8090",
     passwordInputLabel: "Password",
     passwordInputPlaceholder: "Password",
-    descriptionFirstLine: "Remote clipboard helps you copy your",
-    descriptionSecondLine: "passwords to another device",
+    description:
+      "Remote clipboard helps copy your passwords to another device. It’s important to use a strong password as it’s used to encrypt data while  transferring between devices.",
   },
   copyToRemote: {
     successfullyCopied: "Copied",
