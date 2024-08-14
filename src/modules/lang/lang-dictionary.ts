@@ -150,6 +150,8 @@ export type LangDictionary = {
     passwordInputLabel: string;
     passwordInputPlaceholder: string;
     description: string;
+    setupGuideLink: string;
+    howToSetupButtonText: string;
   };
   copyToRemote: {
     successfullyCopied: string;

@@ -158,7 +158,9 @@ export const enDictionary: LangDictionary = {
     passwordInputLabel: "Password",
     passwordInputPlaceholder: "Password",
     description:
-      "Remote clipboard helps copy your passwords to another device. It’s important to use a strong password as it’s used to encrypt data while  transferring between devices.",
+      "Remote clipboard helps you copy your passwords to another device. It’s important to use a strong password as it’s used to encrypt data while  transferring between devices. To see how to setup the remote clipboard on another device press the “How to setup?” button below.",
+    setupGuideLink: "https://github.com/astsu-dev/vaulty-remote-clipboard",
+    howToSetupButtonText: "How to setup?",
   },
   copyToRemote: {
     successfullyCopied: "Copied",

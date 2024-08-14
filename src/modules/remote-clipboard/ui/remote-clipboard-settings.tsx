@@ -1,8 +1,9 @@
-import { Text, View } from "react-native";
+import { Linking, Text, View, ViewStyle } from "react-native";
 import { useRemoteClipboardSettingsStore } from "../store/use-remote-clipboard-settings-store";
 import { useLang } from "@/modules/lang";
 import { SettingsCard } from "@/modules/settings";
 import {
+  Button,
   ComputerIcon,
   Labeled,
   PasswordInput,
@@ -11,7 +12,13 @@ import {
   useTheme,
 } from "@/ui";
 
-export function RemoteClipboardSettings() {
+export type RemoteClipboardSettingsProps = {
+  style?: ViewStyle;
+};
+
+export function RemoteClipboardSettings({
+  style,
+}: RemoteClipboardSettingsProps) {
   const { colors, scale } = useTheme();
   const lang = useLang();
   const { enabled, port, password, setState } = useRemoteClipboardSettingsStore(
@@ -26,64 +33,91 @@ export function RemoteClipboardSettings() {
     handleOnChangeEnableRemoteClipboard(!enabled);
   };
 
+  const handleOnPressHowToSetupButton = async () => {
+    await Linking.openURL(lang.remoteClipboardSettingsScreen.setupGuideLink);
+  };
+
   return (
     <View
-      style={{
-        gap: scale(16),
-      }}
+      style={[
+        {
+          justifyContent: "space-between",
+        },
+        style,
+      ]}
     >
-      <SettingsCard
-        leftIcon={<ComputerIcon size="md" />}
-        text={lang.remoteClipboardSettingsScreen.enableRemoteClipboardCardText}
-        rightAction={
-          <Switch
-            size="md"
-            enabled={enabled}
-            onChange={handleOnChangeEnableRemoteClipboard}
-          />
-        }
-        onPress={handleOnPressRemoteClipboardSettingsCard}
-      ></SettingsCard>
       <View
         style={{
-          gap: scale(10),
+          gap: scale(16),
         }}
       >
-        <Labeled label={lang.remoteClipboardSettingsScreen.portInputLabel}>
-          <TextInput
-            keyboardType="numeric"
-            value={String(port)}
-            placeholder={
-              lang.remoteClipboardSettingsScreen.portInputPlaceholder
-            }
-            disabled={!enabled}
-            onChangeText={(port) =>
-              setState({ port: Number(port.trim()) || 0 })
-            }
-          />
-        </Labeled>
-        <Labeled label={lang.remoteClipboardSettingsScreen.passwordInputLabel}>
-          <PasswordInput
-            value={password}
-            placeholder={
-              lang.remoteClipboardSettingsScreen.passwordInputPlaceholder
-            }
-            disabled={!enabled}
-            onChangeText={(password) => setState({ password: password.trim() })}
-          />
-        </Labeled>
+        <SettingsCard
+          leftIcon={<ComputerIcon size="md" />}
+          text={
+            lang.remoteClipboardSettingsScreen.enableRemoteClipboardCardText
+          }
+          rightAction={
+            <Switch
+              size="md"
+              enabled={enabled}
+              onChange={handleOnChangeEnableRemoteClipboard}
+            />
+          }
+          onPress={handleOnPressRemoteClipboardSettingsCard}
+        ></SettingsCard>
+        <View
+          style={{
+            gap: scale(10),
+          }}
+        >
+          <Labeled label={lang.remoteClipboardSettingsScreen.portInputLabel}>
+            <TextInput
+              keyboardType="numeric"
+              value={String(port)}
+              placeholder={
+                lang.remoteClipboardSettingsScreen.portInputPlaceholder
+              }
+              disabled={!enabled}
+              onChangeText={(port) =>
+                setState({ port: Number(port.trim()) || 0 })
+              }
+            />
+          </Labeled>
+          <Labeled
+            label={lang.remoteClipboardSettingsScreen.passwordInputLabel}
+          >
+            <PasswordInput
+              value={password}
+              placeholder={
+                lang.remoteClipboardSettingsScreen.passwordInputPlaceholder
+              }
+              disabled={!enabled}
+              onChangeText={(password) =>
+                setState({ password: password.trim() })
+              }
+            />
+          </Labeled>
+        </View>
+        <Text
+          style={{
+            fontFamily: "Gilroy-Medium",
+            fontSize: scale(14),
+            lineHeight: scale(14 * 1.4),
+            textAlign: "center",
+            color: colors.subtext2,
+          }}
+        >
+          {lang.remoteClipboardSettingsScreen.description}
+        </Text>
       </View>
-      <Text
+      <Button
+        text={lang.remoteClipboardSettingsScreen.howToSetupButtonText}
+        variant="secondary"
         style={{
-          fontFamily: "Gilroy-Medium",
-          fontSize: scale(14),
-          lineHeight: scale(14 * 1.4),
-          textAlign: "center",
-          color: colors.subtext2,
+          width: "100%",
         }}
-      >
-        {lang.remoteClipboardSettingsScreen.description}
-      </Text>
+        onPress={handleOnPressHowToSetupButton}
+      />
     </View>
   );
 }

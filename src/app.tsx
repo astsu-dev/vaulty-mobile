@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { registerRootComponent } from "expo";
 import * as ScreenCapture from "expo-screen-capture";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { useVaultMetadataStore } from "./modules/vault";
 import { AddPasswordScreen } from "@/screens/add-password-screen";
 import { ChangeVaultPasswordScreen } from "@/screens/change-vault-password-screen";
 import { CreateVaultScreen } from "@/screens/create-vault-screen";
@@ -21,12 +22,16 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function App() {
   ScreenCapture.usePreventScreenCapture();
 
+  const { testString } = useVaultMetadataStore((state) => ({
+    testString: state.testString,
+  }));
+
   return (
     <SafeAreaProvider>
       <RootLayout>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Welcome"
+            initialRouteName={testString ? "UnlockVault" : "Welcome"}
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Welcome" component={WelcomeScreen} />

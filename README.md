@@ -54,6 +54,6 @@ iOS version is not available at the moment.
 - **How can I trust Vaulty?**  
   Vaulty is fully open source and you can check the source code yourself. You can also build the app yourself and install it on your device.
 - **Can I use Vaulty on desktop?**
-  Yes, you can use Vaulty on desktop using [Vaulty Remote Clipboard](https://github.com/astsu-dev/vaulty-remote-clipboard).
+  Yes, you can use Vaulty on Windows, MacOS and Linux using [Vaulty Remote Clipboard](https://github.com/astsu-dev/vaulty-remote-clipboard).
 - **Can I use Vaulty on iOS?**
   No, Vaulty is only available for Android at the moment.

@@ -21,7 +21,7 @@ export function RemoteClipboardSettingsScreen() {
         }}
         showsVerticalScrollIndicator={false}
       >
-        <RemoteClipboardSettings />
+        <RemoteClipboardSettings style={{ flex: 1 }} />
       </ScrollView>
     </ScreenLayout>
   );

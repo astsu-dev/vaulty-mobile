@@ -4,7 +4,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Text, ToastAndroid, View } from "react-native";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
@@ -16,7 +16,6 @@ import {
 } from "@/modules/backup";
 import { ChangeLanguageSheet, useLang } from "@/modules/lang";
 import { PasswordGeneratorCopySheet } from "@/modules/password";
-import { useVaultMetadataStore } from "@/modules/vault";
 import { ScalablePressable, useTheme, DiceIcon, Button, GlobeIcon } from "@/ui";
 
 export function WelcomeScreen({
@@ -24,7 +23,6 @@ export function WelcomeScreen({
 }: NativeStackScreenProps<RootStackParamList, "Welcome">) {
   const { colors, scale } = useTheme();
   const lang = useLang();
-  const { testString } = useVaultMetadataStore();
   const { setBackupFileUri } = useBackupFileStore((state) => ({
     setBackupFileUri: state.setBackupFileUri,
   }));
@@ -61,15 +59,6 @@ export function WelcomeScreen({
       );
     }
   };
-
-  useEffect(() => {
-    if (testString !== null) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "UnlockVault" }],
-      });
-    }
-  }, [testString, navigation]);
 
   return (
     <BottomSheetModalProvider>
