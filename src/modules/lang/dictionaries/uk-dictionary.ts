@@ -114,6 +114,17 @@ export const ukDictionary: LangDictionary = {
       label: "Віддалений буфер обміну",
       remoteClipboardSettingsCardText: "Налаштування сервера",
     },
+    versionSection: {
+      label: "Версія",
+      githubCardText: "Наш продукт з відкритим кодом",
+      githubLink: "https://github.com/astsu-dev/vaulty-mobile",
+    },
+    creditsSection: {
+      label: "Вдячність",
+      iconPackCardText: "Xnix Circular Interface Icons",
+      iconPackLink:
+        "https://www.svgrepo.com/collection/xnix-circular-interface-icons",
+    },
   },
   importBackupSheet: {
     title: "Імпортувати сховище",

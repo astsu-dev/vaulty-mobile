@@ -114,6 +114,17 @@ export const enDictionary: LangDictionary = {
       label: "Remote clipboard",
       remoteClipboardSettingsCardText: "Remote clipboard settings",
     },
+    versionSection: {
+      label: "Version",
+      githubCardText: "Our product is open source",
+      githubLink: "https://github.com/astsu-dev/vaulty-mobile",
+    },
+    creditsSection: {
+      label: "Credits",
+      iconPackCardText: "Xnix Circular Interface Icons",
+      iconPackLink:
+        "https://www.svgrepo.com/collection/xnix-circular-interface-icons",
+    },
   },
   importBackupSheet: {
     title: "Enter a password",

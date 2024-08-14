@@ -12,6 +12,7 @@ import {
   ChangePasswordNameTruncateStyleSheet,
 } from "@/modules/appearance";
 import { BackupSettingsSection } from "@/modules/backup";
+import { CreditsSettingsSection } from "@/modules/credits";
 import {
   ChangeLanguageSheet,
   LanguageSettingsSection,
@@ -19,6 +20,7 @@ import {
 } from "@/modules/lang";
 import { RemoteClipboardSettingsSection } from "@/modules/remote-clipboard";
 import { DeleteVaultSheet } from "@/modules/vault";
+import { VersionSettingsSection } from "@/modules/version";
 import { Button, TrashIcon, useTheme } from "@/ui";
 
 export function SettingsScreen({
@@ -68,7 +70,7 @@ export function SettingsScreen({
           contentContainerStyle={{
             flexGrow: 1,
             justifyContent: "space-between",
-            gap: scale(16),
+            gap: scale(24),
           }}
           showsVerticalScrollIndicator={false}
         >
@@ -92,6 +94,8 @@ export function SettingsScreen({
               }
             />
             <LanguageSettingsSection sheetRef={changeLanguageSheetRef} />
+            <VersionSettingsSection />
+            <CreditsSettingsSection />
           </View>
           <Button
             text={lang.settingsScreen.deleteVaultButton}

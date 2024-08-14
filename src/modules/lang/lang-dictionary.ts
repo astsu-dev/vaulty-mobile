@@ -109,6 +109,16 @@ export type LangDictionary = {
       label: string;
       remoteClipboardSettingsCardText: string;
     };
+    versionSection: {
+      label: string;
+      githubCardText: string;
+      githubLink: string;
+    };
+    creditsSection: {
+      label: string;
+      iconPackCardText: string;
+      iconPackLink: string;
+    };
   };
   importBackupSheet: {
     title: string;
