@@ -4,11 +4,17 @@ import {
 } from "@gorhom/bottom-sheet";
 import * as Clipboard from "expo-clipboard";
 import { useEffect, useRef, useState } from "react";
-import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
+import {
+  ScrollView,
+  StyleProp,
+  ToastAndroid,
+  View,
+  ViewStyle,
+} from "react-native";
 import { PasswordCreate } from "../store/password";
 import { useCopyPassword, useCopyPasswordToRemote } from "../use-copy-password";
 import { PasswordGeneratorUsePasswordSheet } from "./password-generator-use-password-sheet";
-import { useLang } from "@/modules/lang";
+import { LangDictionary, useLang } from "@/modules/lang";
 import {
   useCopyToRemote,
   useRemoteClipboardSettingsStore,
@@ -33,6 +39,14 @@ export type PasswordFormProps = {
   defaultValues: PasswordCreate;
   onSubmit: (values: PasswordCreate) => void;
   style?: StyleProp<ViewStyle>;
+};
+
+const copyValueWithToastMessage = async (
+  value: string,
+  lang: LangDictionary,
+) => {
+  await Clipboard.setStringAsync(value);
+  ToastAndroid.show(lang.copyToast.copied, ToastAndroid.SHORT);
 };
 
 export function PasswordForm({
@@ -73,7 +87,7 @@ export function PasswordForm({
   };
 
   const handleOnCopyUsernamePress = () => {
-    Clipboard.setStringAsync(values.username);
+    copyValueWithToastMessage(values.username, lang);
   };
 
   const handleOnCopyUsernameToRemotePress = async () => {
@@ -81,7 +95,7 @@ export function PasswordForm({
   };
 
   const handleOnCopyEmailPress = () => {
-    Clipboard.setStringAsync(values.email);
+    copyValueWithToastMessage(values.email, lang);
   };
 
   const handleOnCopyEmailToRemotePress = async () => {
@@ -89,7 +103,7 @@ export function PasswordForm({
   };
 
   const handleOnCopyWebsitePress = () => {
-    Clipboard.setStringAsync(values.website);
+    copyValueWithToastMessage(values.website, lang);
   };
 
   const handleOnCopyWebsiteToRemotePress = async () => {

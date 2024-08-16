@@ -173,12 +173,12 @@ export const enDictionary: LangDictionary = {
     setupGuideLink: "https://github.com/astsu-dev/vaulty-remote-clipboard",
     howToSetupButtonText: "How to setup?",
   },
-  copyToRemote: {
-    successfullyCopied: "Copied",
-  },
   changePasswordNameTruncateStyleSheet: {
     title: "Password name truncation style",
     fromLeftValue: "From left (…ssword)",
     fromRightValue: "From right (passwo…)",
+  },
+  copyToast: {
+    copied: "Copied",
   },
 };

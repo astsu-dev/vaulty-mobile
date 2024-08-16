@@ -163,12 +163,12 @@ export type LangDictionary = {
     setupGuideLink: string;
     howToSetupButtonText: string;
   };
-  copyToRemote: {
-    successfullyCopied: string;
-  };
   changePasswordNameTruncateStyleSheet: {
     title: string;
     fromLeftValue: string;
     fromRightValue: string;
+  };
+  copyToast: {
+    copied: string;
   };
 };

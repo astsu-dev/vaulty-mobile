@@ -13,6 +13,7 @@ export function useCopyPassword() {
   const copyPassword = useCallback(
     async (password: string) => {
       await Clipboard.setStringAsync(password);
+      ToastAndroid.show(lang.copyToast.copied, ToastAndroid.SHORT);
       try {
         await clearClipboardWithTimeout({
           timeout: CLEAR_PASSWORD_FROM_CLIPBOARD_TIMEOUT,

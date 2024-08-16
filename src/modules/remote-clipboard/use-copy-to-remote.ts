@@ -15,10 +15,7 @@ export function useCopyToRemote() {
     async (text: string, expiresIn?: number) => {
       try {
         await RemoteClipboardAPI.setClipboard(port, password, text, expiresIn);
-        ToastAndroid.show(
-          lang.copyToRemote.successfullyCopied,
-          ToastAndroid.SHORT,
-        );
+        ToastAndroid.show(lang.copyToast.copied, ToastAndroid.SHORT);
       } catch (err) {
         ToastAndroid.show(
           lang.errors.createUnexpectedErrorText(err),

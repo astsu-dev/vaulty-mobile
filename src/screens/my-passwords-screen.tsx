@@ -53,11 +53,11 @@ export function MyPasswordsScreen({
   );
   passwords = useMemo(
     () =>
-      [...passwords].sort((password) => {
-        if (password.name < password.name) {
+      [...passwords].sort((password1, password2) => {
+        if (password1.name < password2.name) {
           return -1;
         }
-        if (password.name > password.name) {
+        if (password1.name > password2.name) {
           return 1;
         }
         return 0;
@@ -97,9 +97,12 @@ export function MyPasswordsScreen({
             id: password.item.id,
           })
         }
+        style={{
+          marginBottom: scale(10),
+        }}
       />
     ),
-    [navigation],
+    [navigation, scale],
   );
 
   return (
@@ -145,13 +148,10 @@ export function MyPasswordsScreen({
                 renderItem={renderPassword}
                 keyExtractor={(password) => password.id}
                 showsVerticalScrollIndicator={false}
-                estimatedItemSize={85}
-                ItemSeparatorComponent={() => (
-                  <View style={{ height: scale(10) }} />
-                )}
+                estimatedItemSize={95}
                 ListFooterComponent={
                   passwords.length
-                    ? () => <View style={{ height: scale(82) }} />
+                    ? () => <View style={{ height: scale(72) }} />
                     : undefined
                 }
               />

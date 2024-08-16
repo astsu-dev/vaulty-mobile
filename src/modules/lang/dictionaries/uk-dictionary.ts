@@ -191,12 +191,12 @@ export const ukDictionary: LangDictionary = {
       "https://github.com/astsu-dev/vaulty-remote-clipboard/blob/main/README_UA.md",
     howToSetupButtonText: "Як налаштувати?",
   },
-  copyToRemote: {
-    successfullyCopied: "Скопійовано",
-  },
   changePasswordNameTruncateStyleSheet: {
     title: "Стиль обрізання назви паролю",
     fromLeftValue: "Зліва (…роль)",
     fromRightValue: "Справа (паро…)",
+  },
+  copyToast: {
+    copied: "Скопійовано",
   },
 };

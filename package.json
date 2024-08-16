@@ -1,6 +1,6 @@
 {
   "name": "vaulty",
-  "version": "0.1.0-alpha.10",
+  "version": "0.1.0-alpha.12",
   "main": "src/app.tsx",
   "scripts": {
     "start": "expo start",
@@ -9,7 +9,9 @@
     "web": "expo start --web",
     "release:android": "expo prebuild -p android && expo run:android --variant release",
     "test": "jest",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "lint:type": "tsc --noEmit",
+    "lint": "npm run lint:fix && npm run lint:type"
   },
   "dependencies": {
     "@craftzdog/react-native-buffer": "^6.0.5",

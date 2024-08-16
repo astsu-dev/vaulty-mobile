@@ -40,7 +40,7 @@ export async function clearClipboardWithTimeout({
       headlessTaskName: "clear-clipboard",
       notificationTitle: notification.title,
       notificationDesc: notification.description,
-      notificationIconName: "ic_launcher_foreground",
+      notificationIconName: "ic_launcher",
       notificationIconType: "mipmap",
       linkingURI: "vaulty://",
     },
