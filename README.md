@@ -41,7 +41,8 @@ The user experience is similar to AirDrop feature on iOS.
 
 ## Installation
 
-You can download the APK file from the [Releases](https://github.com/astsu-dev/vaulty-mobile/releases/latest) page to install the app on your Android device.
+You can install the application from [Google Play](https://play.google.com/store/apps/details?id=com.astsu_dev.vaulty)
+or download the APK file from the [Releases](https://github.com/astsu-dev/vaulty-mobile/releases/latest) page.
 iOS version is not available at the moment.
 
 ## FAQ
