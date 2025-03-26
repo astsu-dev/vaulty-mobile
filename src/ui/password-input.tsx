@@ -9,6 +9,8 @@ export function PasswordInput({
   rightActions,
   disabled,
   autoCapitalize = "none",
+  autoComplete = "off",
+  importantForAutofill = "no",
   ...props
 }: PasswordInputProps) {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -39,6 +41,8 @@ export function PasswordInput({
         </>
       }
       disabled={disabled}
+      autoComplete={autoComplete}
+      importantForAutofill={importantForAutofill}
       {...props}
     />
   );
