@@ -169,8 +169,10 @@ export function CreateVaultScreen({
               <ScalablePressable
                 style={[
                   {
+                    justifyContent: "center",
+                    alignItems: "center",
                     borderRadius: scale(16),
-                    padding: scale(13.9),
+                    padding: scale(14),
                     backgroundColor: colors.text,
                   },
                   createVaultButtonTranslateXAnimatedStyle,

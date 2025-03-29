@@ -15,46 +15,46 @@
   },
   "dependencies": {
     "@craftzdog/react-native-buffer": "^6.0.5",
-    "@gorhom/bottom-sheet": "^5.0.0-alpha.9",
+    "@gorhom/bottom-sheet": "^5.1.2",
     "@miblanchard/react-native-slider": "^2.6.0",
-    "@react-native-community/netinfo": "11.3.1",
-    "@react-navigation/native": "^6.1.17",
-    "@react-navigation/native-stack": "^6.9.26",
-    "expo": "^51.0.0",
-    "expo-build-properties": "~0.12.5",
-    "expo-clipboard": "~6.0.3",
-    "expo-document-picker": "~12.0.2",
-    "expo-file-system": "~17.0.1",
-    "expo-font": "~12.0.10",
-    "expo-haptics": "~13.0.1",
-    "expo-navigation-bar": "~3.0.7",
-    "expo-notifications": "~0.28.19",
-    "expo-sharing": "~12.0.1",
-    "expo-splash-screen": "~0.27.7",
-    "expo-status-bar": "~1.12.1",
-    "expo-system-ui": "~3.0.7",
+    "@react-native-community/netinfo": "11.4.1",
+    "@react-navigation/native": "^7.0.19",
+    "@react-navigation/native-stack": "^7.3.3",
+    "@shopify/flash-list": "1.7.3",
+    "expo": "^52.0.41",
+    "expo-application": "~6.0.2",
+    "expo-build-properties": "~0.13.2",
+    "expo-clipboard": "~7.0.1",
+    "expo-document-picker": "~13.0.3",
+    "expo-file-system": "~18.0.12",
+    "expo-font": "~13.0.4",
+    "expo-haptics": "~14.0.1",
+    "expo-navigation-bar": "~4.0.8",
+    "expo-notifications": "~0.29.14",
+    "expo-screen-capture": "~7.0.1",
+    "expo-sharing": "~13.0.1",
+    "expo-splash-screen": "~0.29.22",
+    "expo-status-bar": "~2.0.1",
+    "expo-system-ui": "~4.0.8",
     "fuse.js": "^7.0.0",
-    "react": "18.2.0",
-    "react-native": "0.74.5",
-    "react-native-gesture-handler": "~2.16.1",
-    "react-native-mmkv": "^2.12.2",
+    "react": "18.3.1",
+    "react-native": "0.76.7",
+    "react-native-gesture-handler": "~2.20.2",
+    "react-native-mmkv": "^3.2.0",
     "react-native-quick-base64": "^2.1.2",
-    "react-native-quick-crypto": "^0.7.1",
-    "react-native-reanimated": "~3.10.1",
-    "react-native-safe-area-context": "4.10.5",
-    "react-native-screens": "3.31.1",
-    "react-native-svg": "15.2.0",
+    "react-native-quick-crypto": "^0.7.12",
+    "react-native-reanimated": "~3.16.1",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "~4.4.0",
+    "react-native-svg": "15.8.0",
     "react-native-udp": "^4.1.7",
     "zod": "^3.23.8",
-    "zustand": "^4.5.2",
-    "@shopify/flash-list": "1.6.4",
-    "expo-screen-capture": "~6.0.1",
-    "expo-application": "~5.9.1"
+    "zustand": "^4.5.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/jest": "^29.5.12",
-    "@types/react": "~18.2.45",
+    "@types/react": "~18.3.12",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
     "@typescript-eslint/parser": "^7.7.1",
     "babel-plugin-module-resolver": "^5.0.2",
@@ -73,5 +73,16 @@
   "overrides": {
     "readable-stream": "^3.6.2"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false,
+        "exclude": [
+          "@craftzdog/react-native-buffer",
+          "react-native-udp"
+        ]
+      }
+    }
+  }
 }

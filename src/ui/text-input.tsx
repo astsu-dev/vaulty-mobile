@@ -44,7 +44,7 @@ export function TextInput({
       style={[
         {
           paddingHorizontal: scale(16),
-          paddingVertical: scale(12),
+          paddingVertical: scale(14),
           backgroundColor: colors.secondary,
           borderRadius: scale(16),
         },
@@ -79,7 +79,6 @@ export function TextInput({
           placeholderTextColor={colors.subtext}
           multiline={multiline}
           editable={!disabled}
-          // selectTextOnFocus={!disabled}
           {...props}
         />
         <View

@@ -13,6 +13,7 @@
       "backgroundColor": "#111111"
     },
     "assetBundlePatterns": ["**/*"],
+    "newArchEnabled": true,
     "ios": {
       "buildNumber": "2",
       "userInterfaceStyle": "automatic",

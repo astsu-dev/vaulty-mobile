@@ -19,7 +19,6 @@ const withForegroundService: ConfigPlugin = (config) => {
     mainApplication.service.push({
       $: {
         "android:name": "app.notifee.core.ForegroundService",
-        // @ts-expect-error: expo type does not support`foregroundServiceType` is not a valid attribute
         "android:foregroundServiceType": "dataSync",
       },
     });

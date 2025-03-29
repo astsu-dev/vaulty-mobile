@@ -1,9 +1,4 @@
-import {
-  NativeModulesProxy,
-  EventEmitter,
-  Subscription,
-  Platform,
-} from "expo-modules-core";
+import { Platform } from "expo-modules-core";
 import { AppRegistry, AppState } from "react-native";
 import {
   ExpireEventPayload,
@@ -13,10 +8,6 @@ import {
 } from "./src/ExpoForegroundActions.types";
 import ExpoForegroundActionsModule from "./src/ExpoForegroundActionsModule";
 export * from "./src/ExpoForegroundActions.types";
-
-const emitter = new EventEmitter(
-  ExpoForegroundActionsModule ?? NativeModulesProxy.ExpoForegroundActions,
-);
 
 let ranTaskCount: number = 0;
 
@@ -147,6 +138,6 @@ export const getBackgroundTimeRemaining = async (): Promise<number> => {
 
 export function addExpirationListener(
   listener: (event: ExpireEventPayload) => void,
-): Subscription {
-  return emitter.addListener("onExpirationEvent", listener);
+) {
+  return ExpoForegroundActionsModule.addListener("onExpirationEvent", listener);
 }
