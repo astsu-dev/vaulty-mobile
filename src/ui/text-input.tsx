@@ -27,6 +27,7 @@ export function TextInput({
   insideSheet,
   multiline,
   disabled,
+  numberOfLines,
   ...props
 }: TextInputProps) {
   const { colors, scale } = useTheme();
@@ -79,6 +80,7 @@ export function TextInput({
           placeholderTextColor={colors.subtext}
           multiline={multiline}
           editable={!disabled}
+          numberOfLines={numberOfLines ?? (multiline ? undefined : 1)}
           {...props}
         />
         <View
