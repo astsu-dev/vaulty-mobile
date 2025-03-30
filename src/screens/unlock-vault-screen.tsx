@@ -4,7 +4,8 @@ import {
 } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
-import { useCallback, useRef, useState } from "react";
+import * as SecureStore from "expo-secure-store";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Text, ToastAndroid, View } from "react-native";
 import {
   useAnimatedStyle,
@@ -16,6 +17,10 @@ import {
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
+import {
+  getEncryptionKeyWithBiometric,
+  useBiometricAuthSettingsStore,
+} from "@/modules/biometric-auth";
 import { useLang } from "@/modules/lang";
 import { PasswordGeneratorCopySheet } from "@/modules/password";
 import { DeleteVaultSheet, useUnlockVault } from "@/modules/vault";
@@ -27,6 +32,7 @@ import {
   EASING,
   TrashIcon,
   PasswordInput,
+  FingerprintIcon,
 } from "@/ui";
 import { InvalidKeyError } from "@/utils/crypto";
 
@@ -46,7 +52,10 @@ export function UnlockVaultScreen({
     deleteVaultSheetRef.current?.present();
   }, []);
 
-  const unlockVault = useUnlockVault();
+  const { unlockVaultWithPassword, unlockVaultWithKey } = useUnlockVault();
+  const { enabled: biometricAuthEnabled } = useBiometricAuthSettingsStore();
+  const canUseBiometric =
+    SecureStore.canUseBiometricAuthentication() && biometricAuthEnabled;
 
   const [formPassword, setFormPassword] = useState("");
 
@@ -85,7 +94,7 @@ export function UnlockVaultScreen({
   const handleUnlockVaultPress = async () => {
     if (formPassword) {
       try {
-        await unlockVault(formPassword);
+        await unlockVaultWithPassword(formPassword);
       } catch (err) {
         if (err instanceof InvalidKeyError) {
           shakeUnlockVaultButton();
@@ -124,6 +133,46 @@ export function UnlockVaultScreen({
     });
   };
 
+  const unlockWithBiometric = useCallback(async () => {
+    if (!canUseBiometric) {
+      return;
+    }
+
+    const key = await getEncryptionKeyWithBiometric(
+      lang.biometricAuth.authPrompt,
+    );
+    if (key === null) {
+      return;
+    }
+
+    try {
+      await unlockVaultWithKey(key);
+    } catch (err) {
+      ToastAndroid.show(
+        lang.errors.createUnexpectedErrorText(err),
+        ToastAndroid.SHORT,
+      );
+      throw err;
+    }
+
+    // Navigate to the unlocked vault
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MyPasswords" }],
+    });
+  }, [
+    canUseBiometric,
+    lang.biometricAuth.authPrompt,
+    lang.errors,
+    navigation,
+    unlockVaultWithKey,
+  ]);
+
+  // Unlock with biometric at the first render
+  useEffect(() => {
+    unlockWithBiometric();
+  }, [unlockWithBiometric]);
+
   return (
     <BottomSheetModalProvider>
       <ScreenLayout
@@ -147,76 +196,108 @@ export function UnlockVaultScreen({
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            gap: scale(32),
+            gap: scale(22),
             width: "100%",
           }}
         >
-          <Illustration />
           <View
             style={{
+              justifyContent: "center",
               alignItems: "center",
-              gap: scale(22),
+              gap: scale(32),
               width: "100%",
             }}
           >
+            <Illustration />
             <View
               style={{
                 alignItems: "center",
-                gap: scale(12),
+                gap: scale(22),
+                width: "100%",
               }}
             >
-              <Text
+              <View
                 style={{
-                  fontFamily: "Gilroy-Bold",
-                  fontSize: scale(24),
-                  color: colors.text,
+                  alignItems: "center",
+                  gap: scale(12),
                 }}
               >
-                {lang.unlockVaultScreen.title}
-              </Text>
+                <Text
+                  style={{
+                    fontFamily: "Gilroy-Bold",
+                    fontSize: scale(24),
+                    color: colors.text,
+                  }}
+                >
+                  {lang.unlockVaultScreen.title}
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: "Gilroy-Medium",
+                    fontSize: scale(14),
+                    textAlign: "center",
+                    color: colors.subtext,
+                  }}
+                >
+                  {lang.unlockVaultScreen.enterPasswordBelow}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: scale(10),
+                  width: "100%",
+                }}
+              >
+                <PasswordInput
+                  value={formPassword}
+                  onChangeText={setFormPassword}
+                  containerStyle={{
+                    flex: 1,
+                  }}
+                  placeholder={lang.passwordInput.placeholder}
+                />
+                <ScalablePressable
+                  style={[
+                    {
+                      justifyContent: "center",
+                      alignItems: "center",
+                      borderRadius: scale(16),
+                      padding: scale(14),
+                      backgroundColor: colors.text,
+                    },
+                    unlockVaultButtonTranslateXAnimatedStyle,
+                  ]}
+                  onPress={handleUnlockVaultPress}
+                >
+                  <RightArrowIcon color={colors.primary} size="md" />
+                </ScalablePressable>
+              </View>
+            </View>
+          </View>
+          {canUseBiometric ? (
+            <View
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                gap: scale(8),
+              }}
+            >
+              <ScalablePressable onPress={unlockWithBiometric}>
+                <FingerprintIcon size="xxl" color={colors.subtext} />
+              </ScalablePressable>
               <Text
                 style={{
-                  fontFamily: "Gilroy-Medium",
-                  fontSize: scale(14),
+                  fontFamily: "Gilroy-SemiBold",
+                  fontSize: scale(16),
                   textAlign: "center",
                   color: colors.subtext,
                 }}
               >
-                {lang.unlockVaultScreen.enterPasswordBelow}
+                {lang.unlockVaultScreen.useBiometric}
               </Text>
             </View>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: scale(10),
-                width: "100%",
-              }}
-            >
-              <PasswordInput
-                value={formPassword}
-                onChangeText={setFormPassword}
-                containerStyle={{
-                  flex: 1,
-                }}
-                placeholder={lang.passwordInput.placeholder}
-              />
-              <ScalablePressable
-                style={[
-                  {
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: scale(16),
-                    padding: scale(14),
-                    backgroundColor: colors.text,
-                  },
-                  unlockVaultButtonTranslateXAnimatedStyle,
-                ]}
-                onPress={handleUnlockVaultPress}
-              >
-                <RightArrowIcon color={colors.primary} size="md" />
-              </ScalablePressable>
-            </View>
-          </View>
+          ) : null}
         </View>
       </ScreenLayout>
       <PasswordGeneratorCopySheet sheetRef={passwordGeneratorSheetRef} />

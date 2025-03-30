@@ -34,6 +34,7 @@ export type LangDictionary = {
     enterPasswordBelow: string;
     passwordEmptyError: string;
     incorrectPasswordError: string;
+    useBiometric: string;
   };
   errors: {
     createUnexpectedErrorText: (err: unknown) => string;
@@ -100,6 +101,10 @@ export type LangDictionary = {
       label: string;
       exportBackupCardText: string;
       importBackupCardText: string;
+    };
+    authSection: {
+      label: string;
+      useBiometricAuthCardText: string;
       changePasswordCardText: string;
     };
     languageSection: {
@@ -170,5 +175,8 @@ export type LangDictionary = {
   };
   copyToast: {
     copied: string;
+  };
+  biometricAuth: {
+    authPrompt: string;
   };
 };

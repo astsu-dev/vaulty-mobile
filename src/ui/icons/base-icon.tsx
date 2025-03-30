@@ -2,7 +2,7 @@ import * as React from "react";
 import Svg, { SvgProps } from "react-native-svg";
 import { useTheme } from "../theme";
 
-type IconSize = "md" | "lg" | "xlg";
+type IconSize = "md" | "lg" | "xlg" | "xxl";
 
 const iconSizeToProps: Record<IconSize, { width: number; height: number }> = {
   md: {
@@ -16,6 +16,10 @@ const iconSizeToProps: Record<IconSize, { width: number; height: number }> = {
   xlg: {
     width: 40,
     height: 40,
+  },
+  xxl: {
+    width: 48,
+    height: 48,
   },
 };
 

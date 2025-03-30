@@ -1,5 +1,6 @@
 import { Buffer } from "@craftzdog/react-native-buffer";
 import { useCallback } from "react";
+import { useBiometricAuthSettingsStore } from "../biometric-auth";
 import { useVaultCredentialsStore } from "./store/vault-credentials-store";
 import {
   TEST_STRING,
@@ -33,16 +34,19 @@ export function useDeleteVault() {
   const { clearEncryptionKey } = useVaultCredentialsStore((state) => ({
     clearEncryptionKey: state.clearEncryptionKey,
   }));
+  const { setBiometricAuthStatus } = useBiometricAuthSettingsStore();
 
   const deleteVault = useCallback(() => {
     deletePasswordStorage();
     clearPasswordStore();
+    setBiometricAuthStatus(false);
     deleteRemoteClipboardSettingsStorage();
     clearRemoteClipboardSettingsStore();
     clearTestString();
     clearEncryptionKey();
   }, [
     clearPasswordStore,
+    setBiometricAuthStatus,
     clearRemoteClipboardSettingsStore,
     clearTestString,
     clearEncryptionKey,
@@ -73,10 +77,8 @@ export function useUnlockVault() {
     throw new Error("Test string is not set");
   }
 
-  const unlockVault = useCallback(
-    async (password: string) => {
-      const key = await pbkdf2(password);
-
+  const unlockVaultWithKey = useCallback(
+    async (key: Buffer) => {
       // Check if the key is correct
       const decryptedTestString = await decrypt(testString, key);
       if (decryptedTestString !== TEST_STRING) {
@@ -95,7 +97,20 @@ export function useUnlockVault() {
     ],
   );
 
-  return unlockVault;
+  const unlockVaultWithPassword = useCallback(
+    async (password: string) => {
+      const key = await pbkdf2(password);
+      await unlockVaultWithKey(key);
+    },
+    [unlockVaultWithKey],
+  );
+
+  const functions = {
+    unlockVaultWithKey,
+    unlockVaultWithPassword,
+  };
+
+  return functions;
 }
 
 export function useCreateVault() {
@@ -145,9 +160,11 @@ export function useReplaceVault() {
   const { setEncryptionKey } = useVaultCredentialsStore((state) => ({
     setEncryptionKey: state.setEncryptionKey,
   }));
+  const { setBiometricAuthStatus } = useBiometricAuthSettingsStore();
 
   const replaceVault = useCallback(
     async (passwords: Password[], encryptionKey: Buffer) => {
+      setBiometricAuthStatus(false);
       deletePasswordStorage();
       const newPasswordStore = createPasswordStore(encryptionKey);
       setPasswordStore(newPasswordStore);
@@ -170,6 +187,7 @@ export function useReplaceVault() {
       setEncryptionKey(encryptionKey);
     },
     [
+      setBiometricAuthStatus,
       setTestString,
       setPasswordStore,
       remoteClipboardSettingsStore,
@@ -191,6 +209,7 @@ export function useChangeVaultPassword() {
   const { setEncryptionKey } = useVaultCredentialsStore((state) => ({
     setEncryptionKey: state.setEncryptionKey,
   }));
+  const { setBiometricAuthStatus } = useBiometricAuthSettingsStore();
 
   if (passwordStore === null) {
     throw new Error("Password store is not set");
@@ -202,6 +221,7 @@ export function useChangeVaultPassword() {
 
   const changeVaultPassword = useCallback(
     async (newPassword: string) => {
+      setBiometricAuthStatus(false);
       deletePasswordStorage();
       const newKey = await pbkdf2(newPassword);
 
@@ -231,6 +251,7 @@ export function useChangeVaultPassword() {
       setRemoteClipboardSettingsStore,
       setTestString,
       setEncryptionKey,
+      setBiometricAuthStatus,
     ],
   );
 

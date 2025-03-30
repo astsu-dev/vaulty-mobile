@@ -3,6 +3,7 @@ import {
   BottomSheetModalProvider,
 } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import * as SecureStore from "expo-secure-store";
 import { useRef } from "react";
 import { ScrollView, View } from "react-native";
 import { RootStackParamList } from "./root-stack-param-list";
@@ -12,6 +13,7 @@ import {
   ChangePasswordNameTruncateStyleSheet,
 } from "@/modules/appearance";
 import { BackupSettingsSection } from "@/modules/backup";
+import { BiometricAuthSettingsCard } from "@/modules/biometric-auth";
 import { CreditsSettingsSection } from "@/modules/credits";
 import {
   ChangeLanguageSheet,
@@ -19,7 +21,8 @@ import {
   useLang,
 } from "@/modules/lang";
 import { RemoteClipboardSettingsSection } from "@/modules/remote-clipboard";
-import { DeleteVaultSheet } from "@/modules/vault";
+import { SettingsSection } from "@/modules/settings";
+import { ChangePasswordSettingsCard, DeleteVaultSheet } from "@/modules/vault";
 import { VersionSettingsSection } from "@/modules/version";
 import { Button, TrashIcon, useTheme } from "@/ui";
 
@@ -84,10 +87,15 @@ export function SettingsScreen({
                 changePasswordNameTruncateStyleSheetRef
               }
             />
-            <BackupSettingsSection
-              onPickBackupFile={handleOnPickBackupFile}
-              onChangePasswordPress={handleOnChangePasswordPress}
-            />
+            <BackupSettingsSection onPickBackupFile={handleOnPickBackupFile} />
+            <SettingsSection label={lang.settings.authSection.label}>
+              {SecureStore.canUseBiometricAuthentication() ? (
+                <BiometricAuthSettingsCard />
+              ) : null}
+              <ChangePasswordSettingsCard
+                onChangePasswordPress={handleOnChangePasswordPress}
+              />
+            </SettingsSection>
             <RemoteClipboardSettingsSection
               onPressRemoteClipboardSettingsCard={
                 handleOnRemoteClipboardSettingsPress

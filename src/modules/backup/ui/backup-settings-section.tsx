@@ -7,16 +7,14 @@ import { useLang } from "@/modules/lang";
 import { usePasswordStore } from "@/modules/password";
 import { SettingsCard, SettingsSection } from "@/modules/settings";
 import { useVaultCredentialsStore } from "@/modules/vault";
-import { DownloadIcon, KeyIcon, UploadIcon } from "@/ui";
+import { DownloadIcon, UploadIcon } from "@/ui";
 
 export type BackupSettingsSectionProps = {
   onPickBackupFile?: () => void;
-  onChangePasswordPress?: () => void;
 };
 
 export function BackupSettingsSection({
   onPickBackupFile,
-  onChangePasswordPress,
 }: BackupSettingsSectionProps) {
   const lang = useLang();
   const { passwords } = usePasswordStore((state) => ({
@@ -80,11 +78,6 @@ export function BackupSettingsSection({
         text={lang.settings.backupSection.importBackupCardText}
         leftIcon={<UploadIcon size="md" />}
         onPress={handleOnPressImportBackup}
-      />
-      <SettingsCard
-        text={lang.settings.backupSection.changePasswordCardText}
-        leftIcon={<KeyIcon size="md" />}
-        onPress={onChangePasswordPress}
       />
     </SettingsSection>
   );

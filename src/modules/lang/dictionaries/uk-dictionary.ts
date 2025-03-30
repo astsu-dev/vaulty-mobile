@@ -37,6 +37,7 @@ export const ukDictionary: LangDictionary = {
     enterPasswordBelow: "Введіть ваш пароль нижче.",
     passwordEmptyError: "Пароль не може бути порожнім",
     incorrectPasswordError: "Неправильний пароль",
+    useBiometric: "Використовувати біометрію",
   },
   errors: {
     createUnexpectedErrorText: (err: unknown) => {
@@ -105,6 +106,10 @@ export const ukDictionary: LangDictionary = {
       label: "Резервне копіювання",
       exportBackupCardText: "Експортувати ваше сховище",
       importBackupCardText: "Імпортувати існуюче сховище",
+    },
+    authSection: {
+      label: "Аутентифікація",
+      useBiometricAuthCardText: "Біометрична аутентифікація",
       changePasswordCardText: "Змінити пароль",
     },
     languageSection: {
@@ -198,5 +203,8 @@ export const ukDictionary: LangDictionary = {
   },
   copyToast: {
     copied: "Скопійовано",
+  },
+  biometricAuth: {
+    authPrompt: "Відскануйте, щоб продовжити",
   },
 };

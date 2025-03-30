@@ -37,6 +37,7 @@ export const enDictionary: LangDictionary = {
     enterPasswordBelow: "Enter your password below",
     passwordEmptyError: "Password can't be empty",
     incorrectPasswordError: "Incorrect password",
+    useBiometric: "Use biometric",
   },
   errors: {
     createUnexpectedErrorText: (err: unknown) => {
@@ -105,6 +106,10 @@ export const enDictionary: LangDictionary = {
       label: "Backup",
       exportBackupCardText: "Export your vault",
       importBackupCardText: "Import an existing vault",
+    },
+    authSection: {
+      label: "Authentication",
+      useBiometricAuthCardText: "Biometric auth",
       changePasswordCardText: "Change password",
     },
     languageSection: {
@@ -169,7 +174,7 @@ export const enDictionary: LangDictionary = {
     passwordInputLabel: "Password",
     passwordInputPlaceholder: "Password",
     description:
-      "Remote clipboard helps you copy your passwords to another device. It’s important to use a strong password as it’s used to encrypt data while  transferring between devices. To see how to setup the remote clipboard on another device press the “How to setup?” button below.",
+      "Remote clipboard helps you copy your passwords to another device. It’s important to use a strong password as it’s used to encrypt data while transferring between devices. To see how to setup the remote clipboard on another device press the “How to setup?” button below.",
     setupGuideLink: "https://github.com/astsu-dev/vaulty-remote-clipboard",
     howToSetupButtonText: "How to setup?",
   },
@@ -180,5 +185,8 @@ export const enDictionary: LangDictionary = {
   },
   copyToast: {
     copied: "Copied",
+  },
+  biometricAuth: {
+    authPrompt: "Scan to continue",
   },
 };

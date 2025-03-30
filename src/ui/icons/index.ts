@@ -24,3 +24,4 @@ export { ComputerIcon } from "./computer-icon";
 export { CodeCompareIcon } from "./code-compare-icon";
 export { SeedingIcon } from "./seeding-icon";
 export { GithubIcon } from "./github-icon";
+export { FingerprintIcon } from "./fingerprint-icon";
