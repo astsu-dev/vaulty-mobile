@@ -49,7 +49,8 @@
     "react-native-svg": "15.8.0",
     "react-native-udp": "^4.1.7",
     "zod": "^3.23.8",
-    "zustand": "^4.5.6"
+    "zustand": "^4.5.6",
+    "expo-secure-store": "~14.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

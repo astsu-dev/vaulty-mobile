@@ -7,11 +7,6 @@
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./src/assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#111111"
-    },
     "assetBundlePatterns": ["**/*"],
     "newArchEnabled": true,
     "ios": {
@@ -44,6 +39,14 @@
     },
     "plugins": [
       [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#111111",
+          "image": "./src/assets/adaptive-icon.png",
+          "imageWidth": 200
+        }
+      ],
+      [
         "expo-font",
         {
           "fonts": [
@@ -65,7 +68,8 @@
           }
         }
       ],
-      ["./plugins/expo-foreground-actions"]
+      ["./plugins/expo-foreground-actions"],
+      "expo-secure-store"
     ]
   }
 }
