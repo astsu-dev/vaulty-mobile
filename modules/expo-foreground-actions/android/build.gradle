@@ -68,7 +68,7 @@ android {
   namespace "expo.modules.foregroundactions"
   defaultConfig {
     minSdkVersion safeExtGet("minSdkVersion", 21)
-    targetSdkVersion safeExtGet("targetSdkVersion", 34)
+    targetSdkVersion safeExtGet("targetSdkVersion", 35)
     versionCode 1
     versionName "0.5.0"
   }

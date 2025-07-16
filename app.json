@@ -3,11 +3,13 @@
     "name": "Vaulty",
     "slug": "vaulty",
     "scheme": "vaulty",
-    "version": "0.1.0-alpha.13",
+    "version": "1.0.0-alpha.1",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "newArchEnabled": true,
     "ios": {
       "buildNumber": "2",
@@ -17,7 +19,8 @@
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true
         }
-      }
+      },
+      "bundleIdentifier": "com.astsu-dev.vaulty"
     },
     "android": {
       "versionCode": 2,
@@ -62,13 +65,17 @@
         {
           "android": {
             "packagingOptions": {
-              "pickFirst": ["**/libcrypto.so"]
+              "pickFirst": [
+                "**/libcrypto.so"
+              ]
             },
             "usesCleartextTraffic": true
           }
         }
       ],
-      ["./plugins/expo-foreground-actions"],
+      [
+        "./plugins/expo-foreground-actions"
+      ],
       "expo-secure-store"
     ]
   }

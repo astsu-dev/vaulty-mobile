@@ -1,5 +1,6 @@
 import * as Clipboard from "expo-clipboard";
 import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
 import * as ForegroundActions from "@modules/expo-foreground-actions";
 
 export type ClearClipboardWithTimeoutOptions = {
@@ -29,20 +30,23 @@ export async function clearClipboardWithTimeout({
   clearTimes = 20,
 }: ClearClipboardWithTimeoutOptions) {
   await Notifications.requestPermissionsAsync();
-  await ForegroundActions.runForegroundedAction(
-    async () => {
-      await new Promise((resolve) => setTimeout(resolve, timeout));
-      for (let i = 0; i < clearTimes; i++) {
-        await Clipboard.setStringAsync("");
-      }
-    },
-    {
-      headlessTaskName: "clear-clipboard",
-      notificationTitle: notification.title,
-      notificationDesc: notification.description,
-      notificationIconName: "ic_launcher",
-      notificationIconType: "mipmap",
-      linkingURI: "vaulty://",
-    },
-  );
+  // Run foreground action only for Android
+  if (Platform.OS === "android") {
+    await ForegroundActions.runForegroundedAction(
+      async () => {
+        await new Promise((resolve) => setTimeout(resolve, timeout));
+        for (let i = 0; i < clearTimes; i++) {
+          await Clipboard.setStringAsync("");
+        }
+      },
+      {
+        headlessTaskName: "clear-clipboard",
+        notificationTitle: notification.title,
+        notificationDesc: notification.description,
+        notificationIconName: "ic_launcher",
+        notificationIconType: "mipmap",
+        linkingURI: "vaulty://",
+      },
+    );
+  }
 }
