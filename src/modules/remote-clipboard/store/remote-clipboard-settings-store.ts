@@ -1,7 +1,7 @@
 import { Buffer } from "@craftzdog/react-native-buffer";
 import { createContext } from "react";
 import { MMKV } from "react-native-mmkv";
-import { createStore } from "zustand";
+import { StateCreator, createStore } from "zustand";
 import { persist } from "zustand/middleware";
 import { createZustandStorageFromEncryptedMMKV } from "@/utils/storage";
 
@@ -22,24 +22,25 @@ export type RemoteClipboardSettingsStoreActions = {
   setState: (state: Partial<RemoteClipboardSettingsStoreState>) => void;
 };
 
+export const remoteClipboardSettingsStoreCreator: StateCreator<
+  RemoteClipboardSettingsStoreState & RemoteClipboardSettingsStoreActions
+> = (set) => ({
+  enabled: false,
+  port: 8090,
+  password: "",
+  setState: set,
+});
+
 export function createRemoteClipboardSettingsStore(key: Buffer) {
   const storage = new MMKV({ id: STORAGE_ID });
 
   return createStore<
     RemoteClipboardSettingsStoreState & RemoteClipboardSettingsStoreActions
   >()(
-    persist(
-      (set) => ({
-        enabled: false,
-        port: 8090,
-        password: "",
-        setState: set,
-      }),
-      {
-        name: STORAGE_ID,
-        storage: createZustandStorageFromEncryptedMMKV(storage, key),
-      },
-    ),
+    persist(remoteClipboardSettingsStoreCreator, {
+      name: STORAGE_ID,
+      storage: createZustandStorageFromEncryptedMMKV(storage, key),
+    }),
   );
 }
 

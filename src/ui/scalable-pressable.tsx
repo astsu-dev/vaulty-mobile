@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics";
 import { ComponentProps } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 import Animated, {
@@ -28,6 +29,7 @@ export function ScalablePressable({
 
   const handleOnPressOut = (event: GestureResponderEvent) => {
     scale.value = 1;
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onPressOut?.(event);
   };
 

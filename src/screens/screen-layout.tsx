@@ -1,7 +1,7 @@
 import * as NavigationBar from "expo-navigation-bar";
 import { StatusBar } from "expo-status-bar";
 import { ComponentProps, useEffect } from "react";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Header, HeaderProps } from "./header";
 import { useTheme } from "@/ui";
@@ -15,7 +15,9 @@ export function ScreenLayout({ header, style, children }: ScreenLayoutProps) {
   const insets = useSafeAreaInsets();
 
   useEffect(() => {
-    NavigationBar.setBackgroundColorAsync(colors.primary);
+    if (Platform.OS === "android") {
+      NavigationBar.setBackgroundColorAsync(colors.primary);
+    }
   }, [colors.primary]);
 
   return (
@@ -25,7 +27,7 @@ export function ScreenLayout({ header, style, children }: ScreenLayoutProps) {
           flex: 1,
           gap: scale(16),
           // Use top insets here but not in RootLayout because the backdrop from bottom sheets will not be visible on the status bar
-          paddingTop: insets.top + scale(12),
+          paddingTop: insets.top + (Platform.OS === "android" ? scale(12) : 0),
           paddingHorizontal: scale(20),
           paddingBottom: scale(20),
           backgroundColor: colors.primary,

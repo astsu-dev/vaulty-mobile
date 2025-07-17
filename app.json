@@ -7,9 +7,7 @@
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "newArchEnabled": true,
     "ios": {
       "buildNumber": "2",
@@ -65,17 +63,13 @@
         {
           "android": {
             "packagingOptions": {
-              "pickFirst": [
-                "**/libcrypto.so"
-              ]
+              "pickFirst": ["**/libcrypto.so"]
             },
             "usesCleartextTraffic": true
           }
         }
       ],
-      [
-        "./plugins/expo-foreground-actions"
-      ],
+      ["./plugins/expo-foreground-actions"],
       "expo-secure-store"
     ]
   }

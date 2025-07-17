@@ -113,6 +113,32 @@ export function useUnlockVault() {
   return functions;
 }
 
+export function useLockVault() {
+  const { clearPasswordStore } = usePasswordStoreContainerStore((state) => ({
+    clearPasswordStore: state.clearPasswordStore,
+  }));
+  const { clearRemoteClipboardSettingsStore } =
+    useRemoteClipboardSettingsContainerStore((state) => ({
+      clearRemoteClipboardSettingsStore:
+        state.clearRemoteClipboardSettingsStore,
+    }));
+  const { clearEncryptionKey } = useVaultCredentialsStore((state) => ({
+    clearEncryptionKey: state.clearEncryptionKey,
+  }));
+
+  const lockVault = useCallback(() => {
+    clearPasswordStore();
+    clearRemoteClipboardSettingsStore();
+    clearEncryptionKey();
+  }, [
+    clearPasswordStore,
+    clearRemoteClipboardSettingsStore,
+    clearEncryptionKey,
+  ]);
+
+  return lockVault;
+}
+
 export function useCreateVault() {
   const { setTestString } = useVaultMetadataStore((state) => ({
     setTestString: state.setTestString,

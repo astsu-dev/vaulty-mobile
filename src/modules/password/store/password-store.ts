@@ -2,7 +2,7 @@ import { Buffer } from "@craftzdog/react-native-buffer";
 import { createContext } from "react";
 import { MMKV } from "react-native-mmkv";
 import crypto from "react-native-quick-crypto";
-import { createStore } from "zustand";
+import { StateCreator, createStore } from "zustand";
 import { persist } from "zustand/middleware";
 import { Password, PasswordCreate } from "./password";
 import { createZustandStorageFromEncryptedMMKV } from "@/utils/storage";
@@ -26,6 +26,46 @@ const initialState: PasswordStoreState = {
   passwords: [],
 };
 
+export const passwordStoreStateCreator: StateCreator<
+  PasswordStoreState & PasswordStoreActions
+> = (set, get) => ({
+  ...initialState,
+  addPassword(passwordCreate) {
+    const password: Password = trimPassword({
+      ...passwordCreate,
+      id: crypto.randomUUID(),
+    });
+    set((state) => ({ passwords: [...state.passwords, password] }));
+    return password;
+  },
+  getPassword(id) {
+    return get().passwords.find((password) => password.id === id) ?? null;
+  },
+  updatePassword(id, passwordCreate) {
+    set((state) => ({
+      passwords: state.passwords.map((password) =>
+        password.id === id
+          ? trimPassword({
+              ...password,
+              ...passwordCreate,
+            })
+          : password,
+      ),
+    }));
+  },
+  deletePassword(id) {
+    set((state) => ({
+      passwords: state.passwords.filter((password) => password.id !== id),
+    }));
+  },
+  clearPasswords() {
+    set({ passwords: [] });
+  },
+  setPasswords(passwords) {
+    set({ passwords });
+  },
+});
+
 function trimPassword<T extends PasswordCreate>(password: T): T {
   return {
     ...password,
@@ -41,50 +81,11 @@ export function createPasswordStore(key: Buffer) {
   const storage = new MMKV({ id: STORAGE_ID });
 
   return createStore<PasswordStoreState & PasswordStoreActions>()(
-    persist(
-      (set, get) => ({
-        ...initialState,
-        addPassword(passwordCreate) {
-          const password: Password = trimPassword({
-            ...passwordCreate,
-            id: crypto.randomUUID(),
-          });
-          set((state) => ({ passwords: [...state.passwords, password] }));
-          return password;
-        },
-        getPassword(id) {
-          return get().passwords.find((password) => password.id === id) ?? null;
-        },
-        updatePassword(id, passwordCreate) {
-          set((state) => ({
-            passwords: state.passwords.map((password) =>
-              password.id === id
-                ? trimPassword({
-                    ...password,
-                    ...passwordCreate,
-                  })
-                : password,
-            ),
-          }));
-        },
-        deletePassword(id) {
-          set((state) => ({
-            passwords: state.passwords.filter((password) => password.id !== id),
-          }));
-        },
-        clearPasswords() {
-          set({ passwords: [] });
-        },
-        setPasswords(passwords) {
-          set({ passwords });
-        },
-      }),
-      {
-        version: 0,
-        name: STORAGE_ID,
-        storage: createZustandStorageFromEncryptedMMKV(storage, key),
-      },
-    ),
+    persist(passwordStoreStateCreator, {
+      version: 0,
+      name: STORAGE_ID,
+      storage: createZustandStorageFromEncryptedMMKV(storage, key),
+    }),
   );
 }
 

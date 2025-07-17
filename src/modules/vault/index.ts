@@ -7,6 +7,7 @@ export { ChangePasswordSettingsCard } from "./ui/change-password-settings-card";
 export { useVaultCredentialsStore } from "./store/vault-credentials-store";
 export {
   useUnlockVault,
+  useLockVault,
   useDeleteVault,
   useReplaceVault,
   useCreateVault,

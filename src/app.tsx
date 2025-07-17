@@ -4,6 +4,7 @@ import { registerRootComponent } from "expo";
 import * as ScreenCapture from "expo-screen-capture";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useVaultMetadataStore } from "./modules/vault";
+import { VaultLocker } from "./screens/vault-locker";
 import { AddPasswordScreen } from "@/screens/add-password-screen";
 import { ChangeVaultPasswordScreen } from "@/screens/change-vault-password-screen";
 import { CreateVaultScreen } from "@/screens/create-vault-screen";
@@ -25,13 +26,14 @@ function App() {
   const { testString } = useVaultMetadataStore((state) => ({
     testString: state.testString,
   }));
+  const vaultExists = Boolean(testString);
 
   return (
     <SafeAreaProvider>
       <RootLayout>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName={testString ? "UnlockVault" : "Welcome"}
+            initialRouteName={vaultExists ? "UnlockVault" : "Welcome"}
             screenOptions={{ headerShown: false }}
           >
             <Stack.Screen name="Welcome" component={WelcomeScreen} />
@@ -54,6 +56,7 @@ function App() {
               component={RemoteClipboardSettingsScreen}
             />
           </Stack.Navigator>
+          <VaultLocker />
         </NavigationContainer>
       </RootLayout>
     </SafeAreaProvider>

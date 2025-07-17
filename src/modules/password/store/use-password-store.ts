@@ -1,14 +1,21 @@
-import { useStore } from "zustand";
-import { PasswordStoreActions, PasswordStoreState } from "./password-store";
+import { createStore, useStore } from "zustand";
+import {
+  PasswordStore,
+  PasswordStoreActions,
+  PasswordStoreState,
+  passwordStoreStateCreator,
+} from "./password-store";
 import { usePasswordStoreContainerStore } from "./password-store-container-store";
 
 export function usePasswordStore<T>(
   selector: (state: PasswordStoreState & PasswordStoreActions) => T,
 ): T {
-  const { passwordStore } = usePasswordStoreContainerStore();
+  let { passwordStore } = usePasswordStoreContainerStore();
 
   if (!passwordStore) {
-    throw new Error("Password store not set in container store.");
+    passwordStore = createStore<PasswordStoreActions & PasswordStoreState>()(
+      passwordStoreStateCreator,
+    ) as unknown as PasswordStore;
   }
 
   return useStore(passwordStore, selector);

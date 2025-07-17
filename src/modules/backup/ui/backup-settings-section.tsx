@@ -1,3 +1,4 @@
+import { Buffer } from "@craftzdog/react-native-buffer";
 import * as Haptics from "expo-haptics";
 import { ToastAndroid } from "react-native";
 import { UnavailableSharingError, exportBackup } from "../export";
@@ -22,15 +23,11 @@ export function BackupSettingsSection({
     setPasswords: state.setPasswords,
   }));
   const { encryptionKey } = useVaultCredentialsStore((state) => ({
-    encryptionKey: state.encryptionKey,
+    encryptionKey: state.encryptionKey ?? Buffer.from([]),
   }));
   const { setBackupFileUri } = useBackupFileStore((state) => ({
     setBackupFileUri: state.setBackupFileUri,
   }));
-
-  if (!encryptionKey) {
-    throw new Error("Encryption key is not set");
-  }
 
   const handleOnPressExportBackup = async () => {
     try {

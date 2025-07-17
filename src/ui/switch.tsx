@@ -70,10 +70,14 @@ export function Switch({
 
   const transformStyle = useAnimatedStyle(() => {
     return {
-      translateX: withTiming(transformSharedValue.value, {
-        duration: 150,
-        easing: easingFn,
-      }),
+      transform: [
+        {
+          translateX: withTiming(transformSharedValue.value, {
+            duration: 150,
+            easing: easingFn,
+          }),
+        },
+      ],
     };
   });
 

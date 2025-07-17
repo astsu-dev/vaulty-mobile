@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
+import Svg, { ClipPath, Defs, G, Path, SvgProps } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import { useLang } from "@/modules/lang";
@@ -16,17 +16,17 @@ import {
   PasswordGeneratorCopySheet,
   searchPasswords,
   usePasswordStore,
-  usePasswordStoreContainerStore,
 } from "@/modules/password";
+import { useLockVault } from "@/modules/vault";
 import {
-  ScalablePressable,
-  useTheme,
   DiceIcon,
-  TextInput,
-  SearchIcon,
   LockIcon,
   PlusIcon,
+  ScalablePressable,
+  SearchIcon,
   SettingsIcon,
+  TextInput,
+  useTheme,
 } from "@/ui";
 
 export function MyPasswordsScreen({
@@ -34,9 +34,7 @@ export function MyPasswordsScreen({
 }: NativeStackScreenProps<RootStackParamList, "MyPasswords">) {
   const { colors, scale } = useTheme();
   const lang = useLang();
-  const { clearPasswordStore } = usePasswordStoreContainerStore((state) => ({
-    clearPasswordStore: state.clearPasswordStore,
-  }));
+  const lockVault = useLockVault();
 
   const passwordGeneratorSheetRef = useRef<BottomSheetModal>(null);
   const handlePresentPasswordGeneratorPress = useCallback(() => {
@@ -77,11 +75,11 @@ export function MyPasswordsScreen({
   };
 
   const handleLockVaultPress = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "UnlockVault" }],
-    });
-    clearPasswordStore();
+    // navigation.reset({
+    //   index: 0,
+    //   routes: [{ name: "UnlockVault" }],
+    // });
+    lockVault();
   };
 
   const handleOnOpenSettingsPress = () => {

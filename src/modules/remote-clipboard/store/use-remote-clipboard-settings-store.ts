@@ -1,8 +1,10 @@
-import { useStore } from "zustand";
+import { createStore, useStore } from "zustand";
 import { useRemoteClipboardSettingsContainerStore } from "./remote-clipboard-settings-container-store";
 import {
+  RemoteClipboardSettingsStore,
   RemoteClipboardSettingsStoreActions,
   RemoteClipboardSettingsStoreState,
+  remoteClipboardSettingsStoreCreator,
 } from "./remote-clipboard-settings-store";
 
 export function useRemoteClipboardSettingsStore<T>(
@@ -11,13 +13,15 @@ export function useRemoteClipboardSettingsStore<T>(
       RemoteClipboardSettingsStoreActions,
   ) => T,
 ): T {
-  const { remoteClipboardSettingsStore } =
+  let { remoteClipboardSettingsStore } =
     useRemoteClipboardSettingsContainerStore();
 
   if (!remoteClipboardSettingsStore) {
-    throw new Error(
-      "Remote clipboard settings store not set in container store.",
-    );
+    remoteClipboardSettingsStore = createStore<
+      RemoteClipboardSettingsStoreState & RemoteClipboardSettingsStoreActions
+    >()(
+      remoteClipboardSettingsStoreCreator,
+    ) as unknown as RemoteClipboardSettingsStore;
   }
 
   return useStore(remoteClipboardSettingsStore, selector);
