@@ -1,4 +1,5 @@
 import * as Haptics from "expo-haptics";
+import { ImpactFeedbackStyle, NotificationFeedbackType } from "expo-haptics";
 import { ComponentProps } from "react";
 import { GestureResponderEvent, Pressable } from "react-native";
 import Animated, {
@@ -10,14 +11,23 @@ import { EASING } from "./animation";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
-export type ScalablePressableProps = ComponentProps<typeof Pressable>;
+export type ScalablePressableProps = ComponentProps<typeof Pressable> & {
+  /**
+   * The default value is Medium. To disable set to null
+   */
+  impactFeedbackStyle?: ImpactFeedbackStyle | null;
+  notificationFeedbackType?: NotificationFeedbackType;
+};
 
 export function ScalablePressable({
   children,
   style,
   onPressIn,
   onPressOut,
+  onPress,
+  notificationFeedbackType,
   android_disableSound = true,
+  impactFeedbackStyle = ImpactFeedbackStyle.Light,
   ...props
 }: ScalablePressableProps) {
   const scale = useSharedValue(1);
@@ -29,8 +39,17 @@ export function ScalablePressable({
 
   const handleOnPressOut = (event: GestureResponderEvent) => {
     scale.value = 1;
-    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     onPressOut?.(event);
+  };
+
+  const handleOnPress = (event: GestureResponderEvent) => {
+    if (impactFeedbackStyle) {
+      Haptics.impactAsync(impactFeedbackStyle);
+    }
+    if (notificationFeedbackType) {
+      Haptics.notificationAsync(notificationFeedbackType);
+    }
+    onPress?.(event);
   };
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -47,9 +66,9 @@ export function ScalablePressable({
   return (
     <AnimatedPressable
       android_disableSound={android_disableSound}
-      unstable_pressDelay={5}
       onPressIn={handleOnPressIn}
       onPressOut={handleOnPressOut}
+      onPress={handleOnPress}
       style={[animatedStyle, style]}
       {...props}
     >

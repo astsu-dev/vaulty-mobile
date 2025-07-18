@@ -29,7 +29,7 @@ export function ScreenLayout({ header, style, children }: ScreenLayoutProps) {
           // Use top insets here but not in RootLayout because the backdrop from bottom sheets will not be visible on the status bar
           paddingTop: insets.top + (Platform.OS === "android" ? scale(12) : 0),
           paddingHorizontal: scale(20),
-          paddingBottom: scale(20),
+          paddingBottom: Platform.OS === "android" ? scale(20) : 0,
           backgroundColor: colors.primary,
         },
         style,

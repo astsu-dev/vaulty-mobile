@@ -28,6 +28,7 @@ export type LangDictionary = {
     emptyStateFirstLine: string;
     emptyStateSecondLine: string;
     searchPlaceholder: string;
+    searchCancel: string;
   };
   unlockVaultScreen: {
     title: string;

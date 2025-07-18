@@ -31,6 +31,7 @@ export const enDictionary: LangDictionary = {
     emptyStateFirstLine: "You don't have any passwords yet",
     emptyStateSecondLine: 'Press the "+" button to create a new one',
     searchPlaceholder: "Search",
+    searchCancel: "Cancel",
   },
   unlockVaultScreen: {
     title: "Unlock your vault",

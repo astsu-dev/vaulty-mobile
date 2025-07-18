@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
 import * as SecureStore from "expo-secure-store";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Text, ToastAndroid, View } from "react-native";
+import { Platform, Text, ToastAndroid, View } from "react-native";
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -34,6 +34,7 @@ import {
   PasswordInput,
   FingerprintIcon,
 } from "@/ui";
+import { FaceIdIcon } from "@/ui/icons/face-id";
 import { InvalidKeyError } from "@/utils/crypto";
 
 export function UnlockVaultScreen({
@@ -269,6 +270,7 @@ export function UnlockVaultScreen({
                     unlockVaultButtonTranslateXAnimatedStyle,
                   ]}
                   onPress={handleUnlockVaultPress}
+                  impactFeedbackStyle={null}
                 >
                   <RightArrowIcon color={colors.primary} size="md" />
                 </ScalablePressable>
@@ -284,7 +286,11 @@ export function UnlockVaultScreen({
               }}
             >
               <ScalablePressable onPress={unlockWithBiometric}>
-                <FingerprintIcon size="xxl" color={colors.subtext} />
+                {Platform.OS === "ios" ? (
+                  <FaceIdIcon size="xxl" color={colors.subtext} />
+                ) : (
+                  <FingerprintIcon size="xxl" color={colors.subtext} />
+                )}
               </ScalablePressable>
               <Text
                 style={{

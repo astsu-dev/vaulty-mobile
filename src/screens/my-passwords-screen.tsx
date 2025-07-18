@@ -4,8 +4,8 @@ import {
 } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { useCallback, useMemo, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Keyboard, StyleSheet, Text, View } from "react-native";
 import Svg, { ClipPath, Defs, G, Path, SvgProps } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
@@ -35,6 +35,9 @@ export function MyPasswordsScreen({
   const { colors, scale } = useTheme();
   const lang = useLang();
   const lockVault = useLockVault();
+
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
 
   const passwordGeneratorSheetRef = useRef<BottomSheetModal>(null);
   const handlePresentPasswordGeneratorPress = useCallback(() => {
@@ -75,10 +78,6 @@ export function MyPasswordsScreen({
   };
 
   const handleLockVaultPress = () => {
-    // navigation.reset({
-    //   index: 0,
-    //   routes: [{ name: "UnlockVault" }],
-    // });
     lockVault();
   };
 
@@ -102,6 +101,28 @@ export function MyPasswordsScreen({
     ),
     [navigation, scale],
   );
+
+  // Subscribe for the keyboard state
+  useEffect(() => {
+    const willShowListener = Keyboard.addListener("keyboardWillShow", () => {
+      setIsKeyboardVisible(true);
+    });
+    const didShowListener = Keyboard.addListener("keyboardDidShow", () => {
+      setIsKeyboardVisible(true);
+    });
+    const willHideListener = Keyboard.addListener("keyboardWillHide", () => {
+      setIsKeyboardVisible(false);
+    });
+    const didHideListener = Keyboard.addListener("keyboardDidHide", () => {
+      setIsKeyboardVisible(false);
+    });
+    return () => {
+      willShowListener.remove();
+      didShowListener.remove();
+      willHideListener.remove();
+      didHideListener.remove();
+    };
+  }, []);
 
   return (
     <BottomSheetModalProvider>
@@ -198,15 +219,46 @@ export function MyPasswordsScreen({
               <PlusIcon size="xlg" color={colors.primary} />
             </ScalablePressable>
           </View>
-          <TextInput
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            placeholder={lang.myPasswordsScreen.searchPlaceholder}
+          <View
             style={{
+              flexDirection: "row",
+              gap: scale(12),
+              justifyContent: "space-around",
               width: "100%",
             }}
-            leftIcon={<SearchIcon size="md" />}
-          />
+          >
+            <TextInput
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              placeholder={lang.myPasswordsScreen.searchPlaceholder}
+              containerStyle={{
+                flex: 1,
+              }}
+              leftIcon={<SearchIcon size="md" />}
+              onFocus={() => setIsSearchFocused(true)}
+              onBlur={() => setIsSearchFocused(false)}
+            />
+            {isKeyboardVisible && isSearchFocused ? (
+              <ScalablePressable
+                style={{
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onPress={Keyboard.dismiss}
+              >
+                <Text
+                  style={{
+                    fontFamily: "Gilroy-SemiBold",
+                    fontSize: scale(16),
+                    color: colors.text,
+                    textAlign: "center",
+                  }}
+                >
+                  {lang.myPasswordsScreen.searchCancel}
+                </Text>
+              </ScalablePressable>
+            ) : null}
+          </View>
         </View>
       </ScreenLayout>
       <PasswordGeneratorCopySheet sheetRef={passwordGeneratorSheetRef} />

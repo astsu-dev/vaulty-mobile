@@ -1,3 +1,4 @@
+import * as Haptics from "expo-haptics";
 import { useCallback, useEffect } from "react";
 import { Pressable } from "react-native";
 import Animated, {
@@ -37,6 +38,7 @@ export function Switch({
   const handleOnPress = () => {
     if (!disabled) {
       onChange(!enabled);
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
   };
 

@@ -31,6 +31,7 @@ export const ukDictionary: LangDictionary = {
     emptyStateFirstLine: "У вас ще немає паролів.",
     emptyStateSecondLine: 'Натисніть на "+", щоб додати новий',
     searchPlaceholder: "Пошук",
+    searchCancel: "Відмінити",
   },
   unlockVaultScreen: {
     title: "Розблокуйте ваше сховище",
