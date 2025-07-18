@@ -4,7 +4,7 @@ import {
 } from "@gorhom/bottom-sheet";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { FlashList, ListRenderItem } from "@shopify/flash-list";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Keyboard, StyleSheet, Text, View } from "react-native";
 import Svg, { ClipPath, Defs, G, Path, SvgProps } from "react-native-svg";
 import { RootStackParamList } from "./root-stack-param-list";
@@ -28,6 +28,7 @@ import {
   TextInput,
   useTheme,
 } from "@/ui";
+import { useKeyboardIsVisible } from "@/utils/hooks";
 
 export function MyPasswordsScreen({
   navigation,
@@ -37,7 +38,7 @@ export function MyPasswordsScreen({
   const lockVault = useLockVault();
 
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [isKeyboardVisible, setIsKeyboardVisible] = useState(false);
+  const isKeyboardVisible = useKeyboardIsVisible();
 
   const passwordGeneratorSheetRef = useRef<BottomSheetModal>(null);
   const handlePresentPasswordGeneratorPress = useCallback(() => {
@@ -101,28 +102,6 @@ export function MyPasswordsScreen({
     ),
     [navigation, scale],
   );
-
-  // Subscribe for the keyboard state
-  useEffect(() => {
-    const willShowListener = Keyboard.addListener("keyboardWillShow", () => {
-      setIsKeyboardVisible(true);
-    });
-    const didShowListener = Keyboard.addListener("keyboardDidShow", () => {
-      setIsKeyboardVisible(true);
-    });
-    const willHideListener = Keyboard.addListener("keyboardWillHide", () => {
-      setIsKeyboardVisible(false);
-    });
-    const didHideListener = Keyboard.addListener("keyboardDidHide", () => {
-      setIsKeyboardVisible(false);
-    });
-    return () => {
-      willShowListener.remove();
-      didShowListener.remove();
-      willHideListener.remove();
-      didHideListener.remove();
-    };
-  }, []);
 
   return (
     <BottomSheetModalProvider>

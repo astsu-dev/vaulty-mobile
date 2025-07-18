@@ -6,7 +6,7 @@ import {
   useBottomSheetTimingConfigs,
 } from "@gorhom/bottom-sheet";
 import { PropsWithChildren, useMemo } from "react";
-import { StyleProp, ViewStyle } from "react-native";
+import { Platform, StyleProp, ViewStyle } from "react-native";
 import Animated, {
   Easing,
   Extrapolation,
@@ -66,7 +66,7 @@ export function BottomSheet({
         style={[
           {
             paddingHorizontal: scale(20),
-            paddingBottom: scale(20),
+            paddingBottom: Platform.OS === "ios" ? scale(12) : scale(20),
           },
           style,
         ]}
