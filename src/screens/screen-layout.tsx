@@ -1,8 +1,9 @@
 import * as NavigationBar from "expo-navigation-bar";
 import { StatusBar } from "expo-status-bar";
 import { ComponentProps, useEffect } from "react";
-import { Platform, View } from "react-native";
+import { Platform, View, Text } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Toast, { ToastConfig } from "react-native-toast-message";
 import { Header, HeaderProps } from "./header";
 import { useTheme } from "@/ui";
 
@@ -19,6 +20,37 @@ export function ScreenLayout({ header, style, children }: ScreenLayoutProps) {
       NavigationBar.setBackgroundColorAsync(colors.primary);
     }
   }, [colors.primary]);
+
+  const toastConfig: ToastConfig = {
+    neutral: ({ text1 }) => (
+      <View
+        style={{
+          paddingVertical: scale(12),
+          paddingHorizontal: scale(20),
+          borderRadius: scale(100),
+          backgroundColor: colors.primary,
+          marginTop: scale(28),
+          boxShadow: [
+            {
+              offsetX: 0,
+              offsetY: 0,
+              color: colors.secondary,
+              blurRadius: 30,
+            },
+          ],
+        }}
+      >
+        <Text
+          style={{
+            fontFamily: "Gilroy-SemiBold",
+            fontSize: scale(16),
+          }}
+        >
+          {text1}
+        </Text>
+      </View>
+    ),
+  };
 
   return (
     <View
@@ -38,6 +70,7 @@ export function ScreenLayout({ header, style, children }: ScreenLayoutProps) {
       <StatusBar style="auto" />
       <Header {...header} />
       {children}
+      <Toast config={toastConfig} />
     </View>
   );
 }

@@ -185,7 +185,7 @@ export const enDictionary: LangDictionary = {
     fromRightValue: "From right (passwo…)",
   },
   copyToast: {
-    copied: "Copied",
+    copied: "Copied!",
   },
   biometricAuth: {
     authPrompt: "Scan to continue",

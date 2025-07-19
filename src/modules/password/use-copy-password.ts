@@ -1,6 +1,7 @@
 import * as Clipboard from "expo-clipboard";
 import { useCallback } from "react";
 import { ToastAndroid } from "react-native";
+import Toast from "react-native-toast-message";
 import { clearClipboardWithTimeout } from "@/modules/clipboard";
 import { useLang } from "@/modules/lang";
 import { useCopyToRemote } from "@/modules/remote-clipboard";
@@ -13,7 +14,10 @@ export function useCopyPassword() {
   const copyPassword = useCallback(
     async (password: string) => {
       await Clipboard.setStringAsync(password);
-      ToastAndroid.show(lang.copyToast.copied, ToastAndroid.SHORT);
+      Toast.show({
+        type: "neutral",
+        text1: lang.copyToast.copied,
+      });
       try {
         await clearClipboardWithTimeout({
           timeout: CLEAR_PASSWORD_FROM_CLIPBOARD_TIMEOUT,

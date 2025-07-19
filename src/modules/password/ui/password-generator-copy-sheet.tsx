@@ -1,4 +1,5 @@
 import * as Clipboard from "expo-clipboard";
+import Toast from "react-native-toast-message";
 import {
   PasswordGeneratorSheet,
   PasswordGeneratorSheetProps,
@@ -19,6 +20,10 @@ export function PasswordGeneratorCopySheet({
 
   const onButtonPress = (password: string) => {
     Clipboard.setStringAsync(password);
+    Toast.show({
+      type: "neutral",
+      text1: lang.copyToast.copied,
+    });
   };
 
   return (

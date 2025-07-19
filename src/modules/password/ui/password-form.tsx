@@ -4,13 +4,8 @@ import {
 } from "@gorhom/bottom-sheet";
 import * as Clipboard from "expo-clipboard";
 import { useEffect, useRef, useState } from "react";
-import {
-  ScrollView,
-  StyleProp,
-  ToastAndroid,
-  View,
-  ViewStyle,
-} from "react-native";
+import { ScrollView, StyleProp, View, ViewStyle } from "react-native";
+import Toast from "react-native-toast-message";
 import { PasswordCreate } from "../store/password";
 import { useCopyPassword, useCopyPasswordToRemote } from "../use-copy-password";
 import { PasswordGeneratorUsePasswordSheet } from "./password-generator-use-password-sheet";
@@ -46,7 +41,10 @@ const copyValueWithToastMessage = async (
   lang: LangDictionary,
 ) => {
   await Clipboard.setStringAsync(value);
-  ToastAndroid.show(lang.copyToast.copied, ToastAndroid.SHORT);
+  Toast.show({
+    type: "neutral",
+    text1: lang.copyToast.copied,
+  });
 };
 
 export function PasswordForm({
