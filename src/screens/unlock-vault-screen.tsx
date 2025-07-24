@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
 import * as SecureStore from "expo-secure-store";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Platform, Text, ToastAndroid, View } from "react-native";
+import { Platform, Text, View } from "react-native";
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -15,6 +15,7 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
+import Toast from "react-native-toast-message";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import {
@@ -99,17 +100,17 @@ export function UnlockVaultScreen({
       } catch (err) {
         if (err instanceof InvalidKeyError) {
           shakeUnlockVaultButton();
-          ToastAndroid.show(
-            lang.unlockVaultScreen.incorrectPasswordError,
-            ToastAndroid.SHORT,
-          );
+          Toast.show({
+            type: "error",
+            text1: lang.unlockVaultScreen.incorrectPasswordError,
+          });
           return;
         }
 
-        ToastAndroid.show(
-          lang.errors.createUnexpectedErrorText(err),
-          ToastAndroid.SHORT,
-        );
+        Toast.show({
+          type: "error",
+          text1: lang.errors.createUnexpectedErrorText(err),
+        });
         throw err;
       }
 
@@ -120,10 +121,10 @@ export function UnlockVaultScreen({
       });
     } else {
       shakeUnlockVaultButton();
-      ToastAndroid.show(
-        lang.unlockVaultScreen.passwordEmptyError,
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "error",
+        text1: lang.unlockVaultScreen.passwordEmptyError,
+      });
     }
   };
 
@@ -149,10 +150,10 @@ export function UnlockVaultScreen({
     try {
       await unlockVaultWithKey(key);
     } catch (err) {
-      ToastAndroid.show(
-        lang.errors.createUnexpectedErrorText(err),
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "error",
+        text1: lang.errors.createUnexpectedErrorText(err),
+      });
       throw err;
     }
 

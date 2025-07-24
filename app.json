@@ -18,6 +18,9 @@
           "NSAllowsArbitraryLoads": true
         }
       },
+      "entitlements": {
+        "com.apple.developer.networking.multicast": true
+      },
       "bundleIdentifier": "com.astsu-dev.vaulty"
     },
     "android": {

@@ -1,7 +1,7 @@
 import { BottomSheetModal } from "@gorhom/bottom-sheet";
 import * as Haptics from "expo-haptics";
 import { useMemo, useState } from "react";
-import { View, Text, ToastAndroid } from "react-native";
+import { View, Text } from "react-native";
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -9,6 +9,7 @@ import {
   withSequence,
   withTiming,
 } from "react-native-reanimated";
+import Toast from "react-native-toast-message";
 import { InvalidKeyOrCorruptedBackupError, getBackupFromFile } from "../import";
 import { useBackupFileStore } from "../store/backup-file-store";
 import { useLang } from "@/modules/lang";
@@ -84,23 +85,26 @@ export function ImportBackupSheet({
         }
 
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        ToastAndroid.show(msg, ToastAndroid.SHORT);
+        Toast.show({
+          type: "error",
+          text1: msg,
+        });
         return;
       }
 
       sheetRef.current?.close();
-      ToastAndroid.show(
-        lang.importBackupSheet.successfullyImported,
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "neutral",
+        text1: lang.importBackupSheet.successfullyImported,
+      });
       onImport?.();
     } else {
       shakeImportButton();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      ToastAndroid.show(
-        lang.importBackupSheet.passwordEmptyError,
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "error",
+        text1: lang.importBackupSheet.passwordEmptyError,
+      });
     }
   };
 

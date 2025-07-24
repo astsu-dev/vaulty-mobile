@@ -42,6 +42,36 @@ export function ScreenLayout({ header, style, children }: ScreenLayoutProps) {
       >
         <Text
           style={{
+            color: colors.text,
+            fontFamily: "Gilroy-SemiBold",
+            fontSize: scale(16),
+          }}
+        >
+          {text1}
+        </Text>
+      </View>
+    ),
+    error: ({ text1 }) => (
+      <View
+        style={{
+          paddingVertical: scale(12),
+          paddingHorizontal: scale(20),
+          borderRadius: scale(100),
+          backgroundColor: colors.red,
+          marginTop: scale(28),
+          boxShadow: [
+            {
+              offsetX: 0,
+              offsetY: 0,
+              color: colors.secondary,
+              blurRadius: 30,
+            },
+          ],
+        }}
+      >
+        <Text
+          style={{
+            color: colors.lightText,
             fontFamily: "Gilroy-SemiBold",
             fontSize: scale(16),
           }}

@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import { ToastAndroid } from "react-native";
 import Toast from "react-native-toast-message";
 import { RemoteClipboardAPI } from "./remote-clipboard-api";
 import { useRemoteClipboardSettingsStore } from "./store/use-remote-clipboard-settings-store";
@@ -21,10 +20,10 @@ export function useCopyToRemote() {
           text1: lang.copyToast.copied,
         });
       } catch (err) {
-        ToastAndroid.show(
-          lang.errors.createUnexpectedErrorText(err),
-          ToastAndroid.SHORT,
-        );
+        Toast.show({
+          type: "error",
+          text1: lang.errors.createUnexpectedErrorText(err),
+        });
       }
     },
     [port, password, lang],

@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
 import { useState } from "react";
-import { Text, ToastAndroid, View } from "react-native";
+import { Text, View } from "react-native";
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -10,6 +10,7 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
+import Toast from "react-native-toast-message";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import {
@@ -92,14 +93,17 @@ export function ImportBackupScreen({
         }
 
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-        ToastAndroid.show(msg, ToastAndroid.SHORT);
+        Toast.show({
+          type: "error",
+          text1: msg,
+        });
         return;
       }
 
-      ToastAndroid.show(
-        lang.importBackupScreen.successfullyImported,
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "neutral",
+        text1: lang.importBackupScreen.successfullyImported,
+      });
       navigation.reset({
         index: 0,
         routes: [{ name: "MyPasswords" }],
@@ -107,10 +111,10 @@ export function ImportBackupScreen({
     } else {
       shakeImportBackupButton();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      ToastAndroid.show(
-        lang.importBackupScreen.passwordEmptyError,
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "error",
+        text1: lang.importBackupScreen.passwordEmptyError,
+      });
     }
   };
 

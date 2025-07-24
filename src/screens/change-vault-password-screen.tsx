@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
 import { useState } from "react";
-import { Text, ToastAndroid, View } from "react-native";
+import { Text, View } from "react-native";
 import {
   useAnimatedStyle,
   useSharedValue,
@@ -10,6 +10,7 @@ import {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
+import Toast from "react-native-toast-message";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import { useLang } from "@/modules/lang";
@@ -70,10 +71,10 @@ export function ChangeVaultPasswordScreen({
     if (password) {
       await changeVaultPassword(password);
 
-      ToastAndroid.show(
-        lang.changeVaultPasswordScreen.successfullyChanged,
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "neutral",
+        text1: lang.changeVaultPasswordScreen.successfullyChanged,
+      });
       navigation.reset({
         index: 0,
         routes: [{ name: "MyPasswords" }],
@@ -81,10 +82,10 @@ export function ChangeVaultPasswordScreen({
     } else {
       shakeChangeVaultPasswordButton();
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      ToastAndroid.show(
-        lang.changeVaultPasswordScreen.passwordEmptyError,
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "error",
+        text1: lang.changeVaultPasswordScreen.passwordEmptyError,
+      });
     }
   };
 

@@ -5,8 +5,9 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import * as Haptics from "expo-haptics";
 import { useRef } from "react";
-import { Text, ToastAndroid, View } from "react-native";
+import { Text, View } from "react-native";
 import Svg, { SvgProps, G, Path, Defs, ClipPath } from "react-native-svg";
+import Toast from "react-native-toast-message";
 import { RootStackParamList } from "./root-stack-param-list";
 import { ScreenLayout } from "./screen-layout";
 import {
@@ -53,10 +54,10 @@ export function WelcomeScreen({
       }
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      ToastAndroid.show(
-        lang.errors.createUnexpectedErrorText(err),
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "error",
+        text1: lang.errors.createUnexpectedErrorText(err),
+      });
     }
   };
 

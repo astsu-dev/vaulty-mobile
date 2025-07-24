@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import dgram from "react-native-udp";
 import UdpSocket from "react-native-udp/lib/types/UdpSocket";
 import { encrypt, pbkdf2 } from "@/utils/crypto";
@@ -40,6 +41,11 @@ export class RemoteClipboardAPI {
     if (!this.socket) {
       this.socket = dgram.createSocket({ type: "udp4" });
       this.socket.bind();
+      if (Platform.OS === "ios") {
+        this.socket.on("listening", (_msg, _rinfo) => {
+          this.socket?.setBroadcast(true);
+        });
+      }
     }
     return this.socket;
   }

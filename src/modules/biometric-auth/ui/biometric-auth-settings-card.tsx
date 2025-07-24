@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { Platform } from "react-native";
 import {
   getEncryptionKeyWithBiometric,
   saveEncryptionKeyWithBiometric,
@@ -9,6 +10,7 @@ import { SettingsCard } from "@/modules/settings";
 import { useVaultCredentialsStore } from "@/modules/vault";
 import { Switch } from "@/ui";
 import { FingerprintIcon } from "@/ui/icons";
+import { FaceIdIcon } from "@/ui/icons/face-id";
 
 export function BiometricAuthSettingsCard() {
   const lang = useLang();
@@ -40,7 +42,13 @@ export function BiometricAuthSettingsCard() {
 
   return (
     <SettingsCard
-      leftIcon={<FingerprintIcon size="md" />}
+      leftIcon={
+        Platform.OS === "ios" ? (
+          <FaceIdIcon size="md" />
+        ) : (
+          <FingerprintIcon size="md" />
+        )
+      }
       text={lang.settings.authSection.useBiometricAuthCardText}
       rightAction={
         <Switch size="md" enabled={enabled} onChange={handleOnEnabledChange} />

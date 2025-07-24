@@ -1,6 +1,5 @@
 import * as Clipboard from "expo-clipboard";
 import { useCallback } from "react";
-import { ToastAndroid } from "react-native";
 import Toast from "react-native-toast-message";
 import { clearClipboardWithTimeout } from "@/modules/clipboard";
 import { useLang } from "@/modules/lang";
@@ -30,10 +29,10 @@ export function useCopyPassword() {
           },
         });
       } catch (err) {
-        ToastAndroid.show(
-          lang.errors.createUnexpectedErrorText(err),
-          ToastAndroid.SHORT,
-        );
+        Toast.show({
+          type: "error",
+          text1: lang.errors.createUnexpectedErrorText(err),
+        });
       }
     },
     [lang],

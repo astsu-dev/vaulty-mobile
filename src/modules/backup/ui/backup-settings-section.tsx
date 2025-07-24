@@ -1,6 +1,6 @@
 import { Buffer } from "@craftzdog/react-native-buffer";
 import * as Haptics from "expo-haptics";
-import { ToastAndroid } from "react-native";
+import Toast from "react-native-toast-message";
 import { UnavailableSharingError, exportBackup } from "../export";
 import { BackupFilePickCancelledError, pickBackupFile } from "../import";
 import { useBackupFileStore } from "../store/backup-file-store";
@@ -42,7 +42,10 @@ export function BackupSettingsSection({
       }
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      ToastAndroid.show(msg, ToastAndroid.SHORT);
+      Toast.show({
+        type: "error",
+        text1: msg,
+      });
     }
   };
 
@@ -57,10 +60,10 @@ export function BackupSettingsSection({
       }
 
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
-      ToastAndroid.show(
-        lang.errors.createUnexpectedErrorText(err),
-        ToastAndroid.SHORT,
-      );
+      Toast.show({
+        type: "error",
+        text1: lang.errors.createUnexpectedErrorText(err),
+      });
     }
   };
 
