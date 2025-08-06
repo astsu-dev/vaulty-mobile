@@ -80,6 +80,10 @@ export function MyPasswordsScreen({
 
   const handleLockVaultPress = () => {
     lockVault();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "UnlockVault", params: { skipBiometric: true } }],
+    });
   };
 
   const handleOnOpenSettingsPress = () => {

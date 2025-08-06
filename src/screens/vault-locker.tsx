@@ -1,22 +1,27 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { useEffect } from "react";
+import { AppState, Platform } from "react-native";
 import { RootStackParamList } from "./root-stack-param-list";
-import { usePasswordStoreContainerStore } from "@/modules/password";
-import { useVaultMetadataStore } from "@/modules/vault";
+import { useLockVault } from "@/modules/vault";
 
 export function VaultLocker() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { passwordStore } = usePasswordStoreContainerStore();
-  const { testString } = useVaultMetadataStore();
+  const lockVault = useLockVault();
 
   useEffect(() => {
-    if (testString && passwordStore === null) {
-      navigation.reset({
-        index: 0,
-        routes: [{ name: "UnlockVault" }],
+    if (Platform.OS === "ios") {
+      const sub = AppState.addEventListener("change", (nextState) => {
+        if (nextState === "background") {
+          lockVault();
+          navigation.reset({
+            index: 0,
+            routes: [{ name: "UnlockVault", params: { skipBiometric: true } }],
+          });
+        }
       });
+      return sub.remove;
     }
-  }, [navigation, passwordStore, testString]);
+  }, [lockVault, navigation]);
 
   return <></>;
 }

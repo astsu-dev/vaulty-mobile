@@ -40,6 +40,7 @@ import { InvalidKeyError } from "@/utils/crypto";
 
 export function UnlockVaultScreen({
   navigation,
+  route,
 }: NativeStackScreenProps<RootStackParamList, "UnlockVault">) {
   const { colors, scale } = useTheme();
   const lang = useLang();
@@ -172,8 +173,10 @@ export function UnlockVaultScreen({
 
   // Unlock with biometric at the first render
   useEffect(() => {
-    unlockWithBiometric();
-  }, [unlockWithBiometric]);
+    if (!route.params?.skipBiometric) {
+      unlockWithBiometric();
+    }
+  }, [unlockWithBiometric, route.params?.skipBiometric]);
 
   return (
     <BottomSheetModalProvider>
