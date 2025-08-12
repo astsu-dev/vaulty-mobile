@@ -150,7 +150,6 @@ export function MyPasswordsScreen({
                 renderItem={renderPassword}
                 keyExtractor={(password) => password.id}
                 showsVerticalScrollIndicator={false}
-                estimatedItemSize={95}
                 ListFooterComponent={
                   passwords.length
                     ? () => <View style={{ height: scale(72) }} />
@@ -220,6 +219,7 @@ export function MyPasswordsScreen({
               leftIcon={<SearchIcon size="md" />}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
+              autoFocus={passwords.length > 7}
             />
             {isKeyboardVisible && isSearchFocused ? (
               <ScalablePressable
