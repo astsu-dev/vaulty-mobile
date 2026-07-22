@@ -33,6 +33,8 @@ export class RemoteClipboardAPI {
         } else {
           resolve();
         }
+        // Create a new socket everytime to avoid stale connections
+        this.cleanup();
       });
     });
   }
@@ -48,5 +50,12 @@ export class RemoteClipboardAPI {
       }
     }
     return this.socket;
+  }
+
+  public static cleanup() {
+    if (this.socket) {
+      this.socket.close();
+      this.socket = null;
+    }
   }
 }
