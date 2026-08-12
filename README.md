@@ -1,3 +1,5 @@
+
+
 [Українська](https://github.com/astsu-dev/vaulty-mobile/blob/main/README_UA.md)
 
 <img align="left" width="80" height="80" src="assets/icon-for-github.png" alt="App icon" />
@@ -44,6 +46,14 @@ The user experience is similar to AirDrop feature on iOS.
 You can install the application from [Google Play](https://play.google.com/store/apps/details?id=com.astsu_dev.vaulty)
 or download the APK file from the [Releases](https://github.com/astsu-dev/vaulty-mobile/releases/latest) page.
 iOS version is not available at the moment.
+
+## Development
+
+To run the application locally for development:
+
+1. Install dependencies: `npm install`
+2. Start the development server: `npm start`
+3. Run on Android or iOS: `npm run android` or `npm run ios`
 
 ## FAQ
 
